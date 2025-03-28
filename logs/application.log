@@ -1,0 +1,119 @@
+2025-03-28T07:20:16.447+05:30  WARN 18360 --- [Travel_Booking_System] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=11h5m35s841ms822µs100ns).
+2025-03-28T07:20:27.681+05:30  INFO 18360 --- [Travel_Booking_System] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-28T07:20:27.758+05:30  INFO 18360 --- [Travel_Booking_System] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-03-28T07:20:27.768+05:30  INFO 18360 --- [Travel_Booking_System] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-28T07:20:27.772+05:30  INFO 18360 --- [Travel_Booking_System] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-03-28T07:20:27.778+05:30  INFO 18360 --- [Travel_Booking_System] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-03-28T07:20:33.931+05:30  INFO 32260 --- [Travel_Booking_System] [main] l.i.t.TravelBookingSystemApplication     : Starting TravelBookingSystemApplication using Java 17.0.11 with PID 32260 (C:\Users\Ayesha Ushani\Downloads\Travel_Booking_System\target\classes started by Ayesha Ushani in C:\Users\Ayesha Ushani\Downloads\Travel_Booking_System)
+2025-03-28T07:20:33.934+05:30  INFO 32260 --- [Travel_Booking_System] [main] l.i.t.TravelBookingSystemApplication     : No active profile set, falling back to 1 default profile: "default"
+2025-03-28T07:20:34.702+05:30  INFO 32260 --- [Travel_Booking_System] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-28T07:20:34.784+05:30  INFO 32260 --- [Travel_Booking_System] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 72 ms. Found 7 JPA repository interfaces.
+2025-03-28T07:20:35.246+05:30  INFO 32260 --- [Travel_Booking_System] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-03-28T07:20:35.255+05:30  INFO 32260 --- [Travel_Booking_System] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-03-28T07:20:35.255+05:30  INFO 32260 --- [Travel_Booking_System] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-28T07:20:35.303+05:30  INFO 32260 --- [Travel_Booking_System] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-03-28T07:20:35.303+05:30  INFO 32260 --- [Travel_Booking_System] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1330 ms
+2025-03-28T07:20:35.412+05:30  INFO 32260 --- [Travel_Booking_System] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-28T07:20:35.454+05:30  INFO 32260 --- [Travel_Booking_System] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-03-28T07:20:35.496+05:30  INFO 32260 --- [Travel_Booking_System] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-03-28T07:20:35.715+05:30  INFO 32260 --- [Travel_Booking_System] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-28T07:20:35.740+05:30  INFO 32260 --- [Travel_Booking_System] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-03-28T07:20:35.970+05:30  INFO 32260 --- [Travel_Booking_System] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@41bd6a0f
+2025-03-28T07:20:35.971+05:30  INFO 32260 --- [Travel_Booking_System] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-03-28T07:20:36.012+05:30  WARN 32260 --- [Travel_Booking_System] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-28T07:20:36.026+05:30  INFO 32260 --- [Travel_Booking_System] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.40
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-28T07:20:37.127+05:30  INFO 32260 --- [Travel_Booking_System] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-28T07:20:37.221+05:30  INFO 32260 --- [Travel_Booking_System] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-28T07:20:37.659+05:30  INFO 32260 --- [Travel_Booking_System] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2025-03-28T07:20:37.751+05:30  WARN 32260 --- [Travel_Booking_System] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-03-28T07:20:38.361+05:30  INFO 32260 --- [Travel_Booking_System] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-03-28T07:20:38.370+05:30  INFO 32260 --- [Travel_Booking_System] [main] l.i.t.TravelBookingSystemApplication     : Started TravelBookingSystemApplication in 4.843 seconds (process running for 5.459)
+2025-03-28T07:21:19.052+05:30  INFO 32260 --- [Travel_Booking_System] [http-nio-8080-exec-5] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-28T07:21:19.052+05:30  INFO 32260 --- [Travel_Booking_System] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-03-28T07:21:19.054+05:30  INFO 32260 --- [Travel_Booking_System] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-03-28T07:21:23.857+05:30  WARN 32260 --- [Travel_Booking_System] [http-nio-8080-exec-8] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'id': Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; For input string: "undefined"]
+2025-03-28T07:26:55.412+05:30  WARN 32260 --- [Travel_Booking_System] [http-nio-8080-exec-5] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'id': Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; For input string: "undefined"]
+2025-03-28T08:45:26.184+05:30  WARN 32260 --- [Travel_Booking_System] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=44m49s432ms145µs100ns).
+2025-03-28T08:53:46.693+05:30  WARN 32260 --- [Travel_Booking_System] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m50s414ms271µs600ns).
+2025-03-28T09:17:55.717+05:30  INFO 32260 --- [Travel_Booking_System] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-28T09:17:55.763+05:30  INFO 32260 --- [Travel_Booking_System] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-03-28T09:17:55.770+05:30  INFO 32260 --- [Travel_Booking_System] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-28T09:17:55.773+05:30  INFO 32260 --- [Travel_Booking_System] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-03-28T09:17:55.777+05:30  INFO 32260 --- [Travel_Booking_System] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-03-28T09:17:59.113+05:30  INFO 10664 --- [Travel_Booking_System] [main] l.i.t.TravelBookingSystemApplication     : Starting TravelBookingSystemApplication using Java 17.0.11 with PID 10664 (C:\Users\Ayesha Ushani\Downloads\Travel_Booking_System\target\classes started by Ayesha Ushani in C:\Users\Ayesha Ushani\Downloads\Travel_Booking_System)
+2025-03-28T09:17:59.115+05:30  INFO 10664 --- [Travel_Booking_System] [main] l.i.t.TravelBookingSystemApplication     : No active profile set, falling back to 1 default profile: "default"
+2025-03-28T09:17:59.759+05:30  INFO 10664 --- [Travel_Booking_System] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-28T09:17:59.838+05:30  INFO 10664 --- [Travel_Booking_System] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 73 ms. Found 7 JPA repository interfaces.
+2025-03-28T09:18:00.251+05:30  INFO 10664 --- [Travel_Booking_System] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-03-28T09:18:00.259+05:30  INFO 10664 --- [Travel_Booking_System] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-03-28T09:18:00.259+05:30  INFO 10664 --- [Travel_Booking_System] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-28T09:18:00.302+05:30  INFO 10664 --- [Travel_Booking_System] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-03-28T09:18:00.303+05:30  INFO 10664 --- [Travel_Booking_System] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1155 ms
+2025-03-28T09:18:00.412+05:30  INFO 10664 --- [Travel_Booking_System] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-28T09:18:00.449+05:30  INFO 10664 --- [Travel_Booking_System] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-03-28T09:18:00.478+05:30  INFO 10664 --- [Travel_Booking_System] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-03-28T09:18:00.669+05:30  INFO 10664 --- [Travel_Booking_System] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-28T09:18:00.693+05:30  INFO 10664 --- [Travel_Booking_System] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-03-28T09:18:00.907+05:30  INFO 10664 --- [Travel_Booking_System] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@57b130f6
+2025-03-28T09:18:00.909+05:30  INFO 10664 --- [Travel_Booking_System] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-03-28T09:18:00.946+05:30  WARN 10664 --- [Travel_Booking_System] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-28T09:18:00.960+05:30  INFO 10664 --- [Travel_Booking_System] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.40
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-28T09:18:01.837+05:30  INFO 10664 --- [Travel_Booking_System] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-28T09:18:01.909+05:30  INFO 10664 --- [Travel_Booking_System] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-28T09:18:02.301+05:30  INFO 10664 --- [Travel_Booking_System] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2025-03-28T09:18:02.411+05:30  WARN 10664 --- [Travel_Booking_System] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-03-28T09:18:02.982+05:30  INFO 10664 --- [Travel_Booking_System] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-03-28T09:18:02.990+05:30  INFO 10664 --- [Travel_Booking_System] [main] l.i.t.TravelBookingSystemApplication     : Started TravelBookingSystemApplication in 4.246 seconds (process running for 4.72)
+2025-03-28T09:21:09.608+05:30  INFO 10664 --- [Travel_Booking_System] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-28T09:21:09.653+05:30  INFO 10664 --- [Travel_Booking_System] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-03-28T09:21:09.657+05:30  INFO 10664 --- [Travel_Booking_System] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-28T09:21:09.659+05:30  INFO 10664 --- [Travel_Booking_System] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-03-28T09:21:09.665+05:30  INFO 10664 --- [Travel_Booking_System] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-03-28T09:21:11.785+05:30  INFO 18624 --- [Travel_Booking_System] [main] l.i.t.TravelBookingSystemApplication     : Starting TravelBookingSystemApplication using Java 17.0.11 with PID 18624 (C:\Users\Ayesha Ushani\Downloads\Travel_Booking_System\target\classes started by Ayesha Ushani in C:\Users\Ayesha Ushani\Downloads\Travel_Booking_System)
+2025-03-28T09:21:11.788+05:30  INFO 18624 --- [Travel_Booking_System] [main] l.i.t.TravelBookingSystemApplication     : No active profile set, falling back to 1 default profile: "default"
+2025-03-28T09:21:12.461+05:30  INFO 18624 --- [Travel_Booking_System] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-28T09:21:12.537+05:30  INFO 18624 --- [Travel_Booking_System] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 67 ms. Found 7 JPA repository interfaces.
+2025-03-28T09:21:12.956+05:30  INFO 18624 --- [Travel_Booking_System] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-03-28T09:21:12.964+05:30  INFO 18624 --- [Travel_Booking_System] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-03-28T09:21:12.965+05:30  INFO 18624 --- [Travel_Booking_System] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-28T09:21:13.008+05:30  INFO 18624 --- [Travel_Booking_System] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-03-28T09:21:13.008+05:30  INFO 18624 --- [Travel_Booking_System] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1184 ms
+2025-03-28T09:21:13.111+05:30  INFO 18624 --- [Travel_Booking_System] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-28T09:21:13.144+05:30  INFO 18624 --- [Travel_Booking_System] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-03-28T09:21:13.179+05:30  INFO 18624 --- [Travel_Booking_System] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-03-28T09:21:13.372+05:30  INFO 18624 --- [Travel_Booking_System] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-28T09:21:13.400+05:30  INFO 18624 --- [Travel_Booking_System] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-03-28T09:21:13.620+05:30  INFO 18624 --- [Travel_Booking_System] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@9d3a7a1
+2025-03-28T09:21:13.622+05:30  INFO 18624 --- [Travel_Booking_System] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-03-28T09:21:13.660+05:30  WARN 18624 --- [Travel_Booking_System] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-28T09:21:13.673+05:30  INFO 18624 --- [Travel_Booking_System] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.40
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-28T09:21:14.518+05:30  INFO 18624 --- [Travel_Booking_System] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-28T09:21:14.594+05:30  INFO 18624 --- [Travel_Booking_System] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-28T09:21:15.002+05:30  INFO 18624 --- [Travel_Booking_System] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2025-03-28T09:21:15.106+05:30  WARN 18624 --- [Travel_Booking_System] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-03-28T09:21:15.694+05:30  INFO 18624 --- [Travel_Booking_System] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-03-28T09:21:15.702+05:30  INFO 18624 --- [Travel_Booking_System] [main] l.i.t.TravelBookingSystemApplication     : Started TravelBookingSystemApplication in 4.297 seconds (process running for 4.768)
+2025-03-28T09:21:28.465+05:30  INFO 18624 --- [Travel_Booking_System] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-28T09:21:28.465+05:30  INFO 18624 --- [Travel_Booking_System] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-03-28T09:21:28.466+05:30  INFO 18624 --- [Travel_Booking_System] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms

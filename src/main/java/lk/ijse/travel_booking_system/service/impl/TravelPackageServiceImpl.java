@@ -1,0 +1,95 @@
+package lk.ijse.travel_booking_system.service.impl;
+
+import lk.ijse.travel_booking_system.dto.TravelPackageDTO;
+import lk.ijse.travel_booking_system.entity.TravelPackage;
+import lk.ijse.travel_booking_system.repo.TravelPackageRepository;
+import lk.ijse.travel_booking_system.service.TravelPackageService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class TravelPackageServiceImpl implements TravelPackageService {
+
+    @Autowired
+    private TravelPackageRepository travelPackageRepository;
+    @Override
+    public TravelPackageDTO saveTravelPackage(TravelPackageDTO travelPackageDTO) {
+        TravelPackage travelPackage = new TravelPackage(
+                travelPackageDTO.gettPackageId(),
+                travelPackageDTO.getName(),
+                travelPackageDTO.getDestination(),
+                travelPackageDTO.getDuration(),
+                travelPackageDTO.getPrice(),
+                travelPackageDTO.getImage(),
+                travelPackageDTO.getDescription(),
+                null, null, null
+        );
+        travelPackage = travelPackageRepository.save(travelPackage);
+        return new TravelPackageDTO(
+                travelPackage.gettPackageId(),
+                travelPackage.getName(),
+                travelPackage.getDestination(),
+                travelPackage.getImage(),
+                travelPackage.getDuration(),
+                travelPackage.getPrice(),
+                travelPackage.getDescription()
+        );
+    }
+
+
+    @Override
+    public List<TravelPackageDTO> getAllTravelPackages() {
+        return travelPackageRepository.findAll().stream().map(travelPackage -> new TravelPackageDTO(
+                travelPackage.gettPackageId(),
+                travelPackage.getName(),
+                travelPackage.getDestination(),
+                travelPackage.getImage(),
+                travelPackage.getDuration(),
+                travelPackage.getPrice(),
+                travelPackage.getDescription()
+        )).collect(Collectors.toList());
+    }
+
+    @Override
+    public TravelPackageDTO getTravelPackageById(Long id) {
+        TravelPackage travelPackage = travelPackageRepository.findById(id).orElseThrow(() -> new RuntimeException("Package not found"));
+        return new TravelPackageDTO(
+                travelPackage.gettPackageId(),
+                travelPackage.getName(),
+                travelPackage.getDestination(),
+                travelPackage.getImage(),
+                travelPackage.getDuration(),
+                travelPackage.getPrice(),
+                travelPackage.getDescription()
+        );
+    }
+
+    @Override
+    public TravelPackageDTO updateTravelPackage(Long id, TravelPackageDTO travelPackageDTO) {
+        TravelPackage travelPackage = travelPackageRepository.findById(id).orElseThrow(() -> new RuntimeException("Package not found"));
+        travelPackage.setName(travelPackageDTO.getName());
+        travelPackage.setDestination(travelPackageDTO.getDestination());
+        travelPackage.setImage(travelPackageDTO.getImage());
+        travelPackage.setDuration(travelPackageDTO.getDuration());
+        travelPackage.setPrice(travelPackageDTO.getPrice());
+        travelPackage.setDescription(travelPackageDTO.getDescription());
+        travelPackageRepository.save(travelPackage);
+        return new TravelPackageDTO(
+                travelPackage.gettPackageId(),
+                travelPackage.getName(),
+                travelPackage.getDestination(),
+                travelPackage.getImage(),
+                travelPackage.getDuration(),
+                travelPackage.getPrice(),
+                travelPackage.getDescription()
+        );
+    }
+
+    @Override
+    public void deleteTravelPackage(Long id) {
+        travelPackageRepository.deleteById(id);
+    }
+}

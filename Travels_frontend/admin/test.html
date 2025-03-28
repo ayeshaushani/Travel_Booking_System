@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Packages Booking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+        h2 {
+            text-align: center;
+        }
+        .packages {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .package-card {
+            width: 300px;
+            margin: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .package-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .button {
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Select a Travel Package</h2>
+    <div id="packages" class="packages">
+        <!-- Travel package cards will be added here dynamically -->
+    </div>
+
+    <div id="bookingForm" style="display:none;">
+        <h3>Book a Travel Package</h3>
+        <form id="bookingFormDetails">
+            <div>
+                <label for="name">Your Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div>
+                <label for="email">Your Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div>
+                <label for="phone">Your Phone Number:</label>
+                <input type="text" id="phone" name="phone" required>
+            </div>
+            <input type="hidden" id="selectedPackageId" name="packageId">
+            <button type="submit" class="button">Book Now</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Fetch and display all available packages
+    function fetchPackages() {
+        fetch("http://localhost:8080/travel-packages")
+            .then(response => response.json())
+            .then(data => {
+                const packagesDiv = document.getElementById("packages");
+                packagesDiv.innerHTML = ""; // Clear existing packages
+
+                data.forEach(package => {
+                    const packageCard = document.createElement("div");
+                    packageCard.classList.add("package-card");
+                    packageCard.innerHTML = `
+                        <img src="http://localhost:8080/images/${package.image}" alt="${package.name}">
+                        <h3>${package.name}</h3>
+                        <p><strong>Destination:</strong> ${package.destination}</p>
+                        <p><strong>Duration:</strong> ${package.duration}</p>
+                        <p><strong>Price:</strong> LKR ${package.price}</p>
+                        <button class="button" onclick="selectPackage(${package.tPackageId})">Select Package</button>
+                    `;
+                    packagesDiv.appendChild(packageCard);
+                });
+            })
+            .catch(error => console.error("Error fetching packages:", error));
+    }
+
+    // Handle package selection
+    function selectPackage(packageId) {
+        // Show booking form
+        document.getElementById("bookingForm").style.display = "block";
+        document.getElementById("selectedPackageId").value = packageId;
+    }
+
+    // Handle form submission for booking
+    document.getElementById("bookingFormDetails").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        let formData = new FormData();
+        formData.append("name", document.getElementById("name").value);
+        formData.append("email", document.getElementById("email").value);
+        formData.append("phone", document.getElementById("phone").value);
+        formData.append("packageId", document.getElementById("selectedPackageId").value);
+
+        fetch("http://localhost:8080/book-package", {
+            method: "POST",
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                alert("Booking successful! We will get back to you soon.");
+                // Optionally, clear the form or redirect the user
+                document.getElementById("bookingFormDetails").reset();
+            })
+            .catch(error => {
+                alert("Error during booking.");
+                console.error("Error booking package:", error);
+            });
+    });
+
+    // Load packages when the page loads
+    window.onload = function() {
+        fetchPackages();
+    };
+</script>
+
+</body>
+</html>

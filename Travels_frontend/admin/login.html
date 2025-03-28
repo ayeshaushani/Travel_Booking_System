@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9; /* Soft neutral background */
+        }
+
+        h3 {
+            font-weight: bold;
+            color: #6a4c9c; /* Purple for the heading */
+            font-size: 32px;
+        }
+
+        .login-container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 15px rgba(105, 64, 171, 0.1); /* Subtle shadow */
+            width: 350px;
+            position: relative;
+        }
+
+        #registerButton {
+            display: block;
+            width: 100%;
+            background: none;
+            border: none;
+            color: #6a4c9c; /* Purple text */
+            text-align: right;
+            margin-bottom: 10px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .form-control {
+            font-weight: bold;
+            box-shadow: 0px 0px 5px rgba(105, 64, 171, 0.3); /* Soft purple shadow */
+            border: 1px solid #8c7aff; /* Light purple border */
+            transition: all 0.3s ease-in-out;
+        }
+
+        .form-control:focus {
+            box-shadow: 0px 0px 10px rgba(105, 64, 171, 0.6); /* Focus effect with purple */
+            border: 1px solid #a87eff; /* Stronger purple border on focus */
+        }
+
+        .btn-primary {
+            background-color: #56cfe1; /* Teal button */
+            border-color: rgba(0, 0, 0, 0.3);
+            display: block;
+            margin: 0 auto;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .btn-primary:hover, .btn-primary:focus {
+            background-color: #3aafc9; /* Darker teal on hover */
+            border-color: #2a8a90; /* Matching darker border */
+        }
+    </style>
+
+</head>
+<body>
+<div class="login-container" id="signInForm">
+    <h3 class="text-center">Login</h3>
+    <form id="loginForm">
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-50" id="loginButton">Login</button>
+        <button id="registerButton">SignIn</button>
+    </form>
+</div>
+</body>
+
+
+
+<script src="../Controller/UserController.js"></script>
+
+</html>
