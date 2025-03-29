@@ -4,10 +4,12 @@ import lk.ijse.travel_booking_system.dto.TravelPackageDTO;
 import lk.ijse.travel_booking_system.entity.TravelPackage;
 import lk.ijse.travel_booking_system.repo.TravelPackageRepository;
 import lk.ijse.travel_booking_system.service.TravelPackageService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -15,28 +17,19 @@ public class TravelPackageServiceImpl implements TravelPackageService {
 
     @Autowired
     private TravelPackageRepository travelPackageRepository;
+    @Autowired
+    private ModelMapper modelMapper;
     @Override
-    public TravelPackageDTO saveTravelPackage(TravelPackageDTO travelPackageDTO) {
-        TravelPackage travelPackage = new TravelPackage(
-                travelPackageDTO.gettPackageId(),
-                travelPackageDTO.getName(),
-                travelPackageDTO.getDestination(),
-                travelPackageDTO.getDuration(),
-                travelPackageDTO.getPrice(),
-                travelPackageDTO.getImage(),
-                travelPackageDTO.getDescription(),
-                null, null, null
-        );
-        travelPackage = travelPackageRepository.save(travelPackage);
-        return new TravelPackageDTO(
-                travelPackage.gettPackageId(),
-                travelPackage.getName(),
-                travelPackage.getDestination(),
-                travelPackage.getImage(),
-                travelPackage.getDuration(),
-                travelPackage.getPrice(),
-                travelPackage.getDescription()
-        );
+    public boolean saveTravelPackage(TravelPackageDTO travelPackageDTO) {
+
+        if (travelPackageRepository.existsById(travelPackageDTO.gettPackageId())){
+            return false;
+        }else {
+            System.out.println("Serive elat awa"+travelPackageDTO);
+            travelPackageRepository.save(modelMapper.map(travelPackageDTO, TravelPackage.class));
+            return true;
+        }
+
     }
 
 

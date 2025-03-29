@@ -3,6 +3,7 @@ package lk.ijse.travel_booking_system.controller;
 import lk.ijse.travel_booking_system.dto.BookingDTO;
 import lk.ijse.travel_booking_system.dto.TravelPackageDTO;
 import lk.ijse.travel_booking_system.service.BookingService;
+import lk.ijse.travel_booking_system.service.TravelPackageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,8 @@ public class BookingController {
 
     @Autowired
     private BookingService bookingService;
+    @Autowired
+    private TravelPackageService travelPackageService;
 
     @PostMapping
     public ResponseEntity<BookingDTO> saveBooking(@RequestBody BookingDTO bookingDTO) {
@@ -41,8 +44,8 @@ public class BookingController {
         bookingService.deleteBooking(id);
         return ResponseEntity.ok("Booking Deleted Successfully");
     }
-  /*  @GetMapping("/packages")
-    public ResponseEntity<TravelPackageDTO> getTravelPackages() {
-        return ResponseEntity.ok((TravelPackageDTO) bookingService.getAllPackages());
-    }*/
+    @GetMapping("/packages")
+    public ResponseEntity<List<TravelPackageDTO>> getTravelPackages() {
+        return ResponseEntity.ok(travelPackageService.getAllTravelPackages());
+    }
 }

@@ -116,11 +116,11 @@
 
         let selectedPackage = null;
 
-        // Load available packages
+       /* // Load available packages
         fetch('http://localhost:8080/bookings/packages', {
             headers: {
-                'Authorization': `Bearer ${token}`
-            }
+                "Authorization": `Bearer ${localStorage.getItem("jwtToken")}`
+            },
         })
             .then(response => response.json())
             .then(packages => {
@@ -169,7 +169,60 @@
                         <p class="text-danger">Error loading packages. Please try again later.</p>
                     </div>
                 `;
-            });
+            });*/
+        // Load available packages using AJAX
+        $.ajax({
+            url: 'http://localhost:8080/bookings/packages',
+            method: 'GET',
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("jwtToken")}`
+            },
+            success: function(packages) {
+                const packageContainer = $('#packageContainer');
+                packageContainer.empty();
+
+                if (packages.length === 0) {
+                    packageContainer.html('<div class="col-12 text-center py-4"><p>No packages available at the moment.</p></div>');
+                    return;
+                }
+
+                packages.forEach(pkg => {
+                    const packageCard = $(`
+                <div class="col-md-6 mb-4">
+                    <div class="card package-card h-100" data-package-id="${pkg.tPackageId}">
+                        <div class="card-body">
+                            <h5 class="card-title">${pkg.name}</h5>
+                            <p class="card-text">${pkg.description || 'Explore this amazing destination'}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="h5 text-primary">Rs. ${pkg.price.toFixed(2)}</span>
+                                <button class="btn btn-sm btn-outline-primary select-package">Select</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `);
+                    packageContainer.append(packageCard);
+                });
+
+                // Add click event to package cards
+                $('.package-card').on('click', function() {
+                    $('.package-card').removeClass('selected-package');
+                    $(this).addClass('selected-package');
+
+                    selectedPackage = packages.find(p => p.tPackageId == $(this).data('package-id'));
+                    $('#nextBtn1').prop('disabled', false);
+                });
+            },
+            error: function(error) {
+                console.error('Error loading packages:', error);
+                $('#packageContainer').html(`
+            <div class="col-12 text-center py-4">
+                <p class="text-danger">Error loading packages. Please try again later.</p>
+            </div>
+        `);
+            }
+        });
+
 
         // Step navigation
         document.getElementById('nextBtn1').addEventListener('click', function() {
