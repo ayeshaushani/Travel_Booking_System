@@ -2,7 +2,9 @@ package lk.ijse.travel_booking_system.controller;
 
 import lk.ijse.travel_booking_system.dto.TravelPackageDTO;
 import lk.ijse.travel_booking_system.service.TravelPackageService;
+import lk.ijse.travel_booking_system.util.PicEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,36 +26,47 @@ public class TravelPackageController {
     @Autowired
     private TravelPackageService travelPackageService;
 
-    private static final String UPLOAD_DIR = "uploads/";
+   // private static final String UPLOAD_DIR = "uploads/";
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TravelPackageDTO> saveTravelPackage(
-            @RequestParam("name") String name,
-            @RequestParam("destination") String destination,
-            @RequestParam("duration") String duration,
-            @RequestParam("price") double price,
-            @RequestParam("description") String description,
-            @RequestParam("image") MultipartFile imageFile) {
+            @RequestPart("tPackageId")String id,
+            @RequestPart("name") String name,
+            @RequestPart("destination") String destination,
+            @RequestPart("duration") String duration,
+            @RequestPart("price") String price,
+            @RequestPart("description") String description,
+            @RequestPart("image") MultipartFile imageFile) {
 
-        String imagePath = null;
 
-        if (!imageFile.isEmpty()) {
-            try {
-                File uploadDir = new File(UPLOAD_DIR);
-                if (!uploadDir.exists()) uploadDir.mkdirs();
+            Double priceDouble = Double.parseDouble(price);
+            Long idLong = Long.parseLong(id);
 
-                imagePath = UPLOAD_DIR + imageFile.getOriginalFilename();
-                Files.copy(imageFile.getInputStream(), Paths.get(imagePath), StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException e) {
-                return ResponseEntity.badRequest().build();
-            }
-        }
+            TravelPackageDTO travelPackageDTO = new TravelPackageDTO();
 
-        TravelPackageDTO travelPackageDTO = new TravelPackageDTO(null, name, destination, imagePath, duration, price, description);
-        return ResponseEntity.ok(travelPackageService.saveTravelPackage(travelPackageDTO));
+            travelPackageDTO.settPackageId(idLong);
+            travelPackageDTO.setName(name);
+            travelPackageDTO.setDestination(destination);
+            travelPackageDTO.setDuration(duration);
+            travelPackageDTO.setPrice(priceDouble);
+            travelPackageDTO.setDescription(description);
+
+
+
+            String imagePath = PicEncoder.generatePicture(imageFile);
+
+            travelPackageDTO.setImage(imagePath);
+        System.out.println("controller ekata awa" +travelPackageDTO);
+            boolean save =   travelPackageService.saveTravelPackage(travelPackageDTO);
+
+      if (save){
+          return new ResponseEntity<>(HttpStatus.OK);
+      }
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
     }
 
-    @GetMapping
+    @GetMapping("/getAll")
     public ResponseEntity<List<TravelPackageDTO>> getAllTravelPackages() {
         return ResponseEntity.ok(travelPackageService.getAllTravelPackages());
     }
@@ -63,7 +76,7 @@ public class TravelPackageController {
         return ResponseEntity.ok(travelPackageService.getTravelPackageById(id));
     }
 
-    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  /*  @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<TravelPackageDTO> updateTravelPackage(
             @PathVariable Long id,
             @RequestParam("name") String name,
@@ -73,20 +86,20 @@ public class TravelPackageController {
             @RequestParam("description") String description,
             @RequestParam(value = "image", required = false) MultipartFile imageFile) {
 
-        String imagePath = null;
+        //String imagePath = null;
 
-        if (imageFile != null && !imageFile.isEmpty()) {
+       *//* if (imageFile != null && !imageFile.isEmpty()) {
             try {
                 imagePath = UPLOAD_DIR + imageFile.getOriginalFilename();
                 Files.copy(imageFile.getInputStream(), Paths.get(imagePath), StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
                 return ResponseEntity.badRequest().build();
             }
-        }
+        }*//*
 
         TravelPackageDTO travelPackageDTO = new TravelPackageDTO(id, name, destination, imagePath, duration, price, description);
         return ResponseEntity.ok(travelPackageService.updateTravelPackage(id, travelPackageDTO));
-    }
+    }*/
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteTravelPackage(@PathVariable Long id) {

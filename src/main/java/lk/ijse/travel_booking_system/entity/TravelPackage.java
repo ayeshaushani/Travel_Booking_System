@@ -7,13 +7,14 @@ import java.util.List;
 @Entity
 public class TravelPackage {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tPackageId;
     private String name;
     private String destination;
     private String duration;
     private double price;
     private String description;
+    @Column(columnDefinition = "LONGTEXT")
     private String image;
 
     @OneToMany(mappedBy = "travelPackage", cascade = CascadeType.ALL)
