@@ -8,6 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body {
             background-color: #f8f9fa;
@@ -27,6 +29,12 @@
             border: 3px solid #0d6efd;
             background-color: #f0f7ff;
         }
+        .step {
+            display: none;
+        }
+        .step.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -39,14 +47,14 @@
                 </div>
                 <div class="card-body">
                     <!-- Step 1: Select Package -->
-                    <div id="step1">
+                    <div id="step1" class="step active">
                         <h4 class="mb-4"><span class="badge bg-primary">1</span> Select Your Package</h4>
                         <div class="row" id="packageContainer">
-                            <!-- Packages will be loaded here -->
-                            <div class="col-12 text-center">
+                            <div class="col-12 text-center py-4">
                                 <div class="spinner-border text-primary" role="status">
                                     <span class="visually-hidden">Loading...</span>
                                 </div>
+                                <p class="mt-2">Loading packages...</p>
                             </div>
                         </div>
                         <div class="d-flex justify-content-end mt-4">
@@ -55,7 +63,7 @@
                     </div>
 
                     <!-- Step 2: Booking Details -->
-                    <div id="step2" style="display: none;">
+                    <div id="step2" class="step">
                         <h4 class="mb-4"><span class="badge bg-primary">2</span> Enter Booking Details</h4>
                         <form id="bookingForm">
                             <input type="hidden" id="selectedPackageId">
@@ -73,13 +81,13 @@
                             </div>
                             <div class="d-flex justify-content-between mt-4">
                                 <button type="button" class="btn btn-secondary" id="backBtn2"><i class="fas fa-arrow-left me-1"></i> Back</button>
-                                <button type="submit" class="btn btn-primary">Submit Booking <i class="fas fa-check ms-1"></i></button>
+                                <button type="submit" class="btn btn-primary" id="submitBtn">Submit Booking <i class="fas fa-check ms-1"></i></button>
                             </div>
                         </form>
                     </div>
 
                     <!-- Step 3: Confirmation -->
-                    <div id="step3" style="display: none;">
+                    <div id="step3" class="step">
                         <div class="text-center py-4">
                             <i class="fas fa-check-circle text-success" style="font-size: 5rem;"></i>
                             <h3 class="mt-3">Booking Confirmed!</h3>
@@ -103,191 +111,147 @@
 
 <!-- Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Custom JavaScript -->
+
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const token = localStorage.getItem('token');
+    $(document).ready(function() {
+        // Check authentication
+        const token = localStorage.getItem('jwtToken');
         const userId = localStorage.getItem('userId');
 
         if (!token || !userId) {
-            window.location.href = 'bookings.html';
+            console.log('User not authenticated, redirecting to login');
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 100);
             return;
         }
 
         let selectedPackage = null;
+        const apiBaseUrl = 'http://localhost:8080';
 
-       /* // Load available packages
-        fetch('http://localhost:8080/bookings/packages', {
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("jwtToken")}`
-            },
-        })
-            .then(response => response.json())
-            .then(packages => {
-                const packageContainer = document.getElementById('packageContainer');
-                packageContainer.innerHTML = '';
+        // Initialize steps
+        function showStep(stepId) {
+            $('.step').removeClass('active');
+            $(`#${stepId}`).addClass('active');
+        }
 
-                if (packages.length === 0) {
-                    packageContainer.innerHTML = '<div class="col-12 text-center py-4"><p>No packages available at the moment.</p></div>';
-                    return;
-                }
+        // Load packages
+        function loadPackages() {
+            $.ajax({
+                url: `${apiBaseUrl}/bookings/packages`,
+                method: 'GET',
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("jwtToken")}`
+                },
+                success: function(packages) {
+                    const packageContainer = $('#packageContainer');
+                    packageContainer.empty();
 
-                packages.forEach(pkg => {
-                    const packageCard = document.createElement('div');
-                    packageCard.className = 'col-md-6 mb-4';
-                    packageCard.innerHTML = `
-                        <div class="card package-card h-100" data-package-id="${pkg.tPackageId}">
-                            <div class="card-body">
-                                <h5 class="card-title">${pkg.name}</h5>
-                                <p class="card-text">${pkg.description || 'Explore this amazing destination'}</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="h5 text-primary">Rs. ${pkg.price.toFixed(2)}</span>
-                                    <button class="btn btn-sm btn-outline-primary select-package">Select</button>
+                    if (packages.length === 0) {
+                        packageContainer.html('<div class="col-12 text-center py-4"><p>No packages available at the moment.</p></div>');
+                        return;
+                    }
+
+                    packages.forEach(pkg => {
+                        const packageCard = $(`
+                        <div class="col-md-6 mb-4">
+                            <div class="card package-card h-100" data-package-id="${pkg.tPackageId}">
+                                <div class="card-body">
+                                    <h5 class="card-title">${pkg.name}</h5>
+                                    <p class="card-text">${pkg.description || 'Explore this amazing destination'}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="h5 text-primary">Rs. ${pkg.price.toFixed(2)}</span>
+                                        <button class="btn btn-sm btn-outline-primary select-package">Select</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    `;
-                    packageContainer.appendChild(packageCard);
-                });
-
-                // Add click event to package cards
-                document.querySelectorAll('.package-card').forEach(card => {
-                    card.addEventListener('click', function() {
-                        document.querySelectorAll('.package-card').forEach(c => {
-                            c.classList.remove('selected-package');
-                        });
-                        this.classList.add('selected-package');
-                        selectedPackage = packages.find(p => p.tPackageId == this.dataset.packageId);
-                        document.getElementById('nextBtn1').disabled = false;
+                    `);
+                        packageContainer.append(packageCard);
                     });
-                });
-            })
-            .catch(error => {
-                console.error('Error loading packages:', error);
-                document.getElementById('packageContainer').innerHTML = `
+
+                    // Add click event to package cards
+                    $('.package-card').on('click', function() {
+                        $('.package-card').removeClass('selected-package');
+                        $(this).addClass('selected-package');
+                        selectedPackage = packages.find(p => p.tPackageId == $(this).data('package-id'));
+                        $('#nextBtn1').prop('disabled', false);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error loading packages:', error);
+                    $('#packageContainer').html(`
                     <div class="col-12 text-center py-4">
                         <p class="text-danger">Error loading packages. Please try again later.</p>
+                        <button class="btn btn-secondary" onclick="loadPackages()">Retry</button>
                     </div>
-                `;
-            });*/
-        // Load available packages using AJAX
-        $.ajax({
-            url: 'http://localhost:8080/bookings/packages',
-            method: 'GET',
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("jwtToken")}`
-            },
-            success: function(packages) {
-                const packageContainer = $('#packageContainer');
-                packageContainer.empty();
-
-                if (packages.length === 0) {
-                    packageContainer.html('<div class="col-12 text-center py-4"><p>No packages available at the moment.</p></div>');
-                    return;
+                `);
                 }
+            });
+        }
 
-                packages.forEach(pkg => {
-                    const packageCard = $(`
-                <div class="col-md-6 mb-4">
-                    <div class="card package-card h-100" data-package-id="${pkg.tPackageId}">
-                        <div class="card-body">
-                            <h5 class="card-title">${pkg.name}</h5>
-                            <p class="card-text">${pkg.description || 'Explore this amazing destination'}</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="h5 text-primary">Rs. ${pkg.price.toFixed(2)}</span>
-                                <button class="btn btn-sm btn-outline-primary select-package">Select</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `);
-                    packageContainer.append(packageCard);
-                });
-
-                // Add click event to package cards
-                $('.package-card').on('click', function() {
-                    $('.package-card').removeClass('selected-package');
-                    $(this).addClass('selected-package');
-
-                    selectedPackage = packages.find(p => p.tPackageId == $(this).data('package-id'));
-                    $('#nextBtn1').prop('disabled', false);
-                });
-            },
-            error: function(error) {
-                console.error('Error loading packages:', error);
-                $('#packageContainer').html(`
-            <div class="col-12 text-center py-4">
-                <p class="text-danger">Error loading packages. Please try again later.</p>
-            </div>
-        `);
-            }
-        });
-
+        // Initialize date picker
+        function initDatePicker() {
+            const today = new Date().toISOString().split('T')[0];
+            $('#travelDate').attr('min', today);
+        }
 
         // Step navigation
-        document.getElementById('nextBtn1').addEventListener('click', function() {
+        $('#nextBtn1').on('click', function() {
             if (!selectedPackage) return;
-
-            document.getElementById('step1').style.display = 'none';
-            document.getElementById('step2').style.display = 'block';
-            document.getElementById('selectedPackageId').value = selectedPackage.tPackageId;
-
-            // Set min date to today
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('travelDate').min = today;
+            $('#selectedPackageId').val(selectedPackage.tPackageId);
+            initDatePicker();
+            showStep('step2');
         });
 
-        document.getElementById('backBtn2').addEventListener('click', function() {
-            document.getElementById('step2').style.display = 'none';
-            document.getElementById('step1').style.display = 'block';
+        $('#backBtn2').on('click', function() {
+            showStep('step1');
         });
 
         // Form submission
-        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        $('#bookingForm').on('submit', function(e) {
             e.preventDefault();
+            $('#submitBtn').prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...');
 
             const bookingData = {
-                bookingDate: document.getElementById('travelDate').value,
+                bookingDate: $('#travelDate').val(),
                 status: "PENDING",
                 userId: parseInt(userId),
                 tPackageId: parseInt(selectedPackage.tPackageId),
-                specialRequests: document.getElementById('specialRequests').value,
-                travelers: parseInt(document.getElementById('travelers').value)
+                specialRequests: $('#specialRequests').val(),
+                travelers: parseInt($('#travelers').val())
             };
 
-            fetch('http://localhost:8080/bookings', {
+            $.ajax({
+                url: `${apiBaseUrl}/bookings`,
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    "Authorization": `Bearer ${localStorage.getItem("jwtToken")}`
                 },
-                body: JSON.stringify(bookingData)
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Booking failed');
-                    }
-                    return response.json();
-                })
-                .then(booking => {
+                data: JSON.stringify(bookingData),
+                success: function(booking) {
                     // Show confirmation
-                    document.getElementById('step2').style.display = 'none';
-                    document.getElementById('step3').style.display = 'block';
+                    showStep('step3');
 
                     // Display booking details
-                    document.getElementById('bookingId').textContent = booking.bookingId;
-                    document.getElementById('bookingDetails').innerHTML = `
-                        <strong>Package:</strong> ${selectedPackage.name}<br>
-                        <strong>Date:</strong> ${new Date(booking.bookingDate).toLocaleDateString()}<br>
-                        <strong>Travelers:</strong> ${bookingData.travelers}<br>
-                        ${bookingData.specialRequests ? `<strong>Special Requests:</strong> ${bookingData.specialRequests}` : ''}
-                    `;
-                })
-                .catch(error => {
-                    alert('Error submitting booking: ' + error.message);
+                    $('#bookingId').text(booking.bookingId);
+                    $('#bookingDetails').html(`
+                    <strong>Package:</strong> ${selectedPackage.name}<br>
+                    <strong>Date:</strong> ${new Date(booking.bookingDate).toLocaleDateString()}<br>
+                    <strong>Travelers:</strong> ${bookingData.travelers}<br>
+                    ${bookingData.specialRequests ? `<strong>Special Requests:</strong> ${bookingData.specialRequests}` : ''}
+                `);
+                },
+                error: function(xhr, status, error) {
+                    alert('Error submitting booking: ' + (xhr.responseJSON?.message || error));
                     console.error('Booking error:', error);
-                });
+                    $('#submitBtn').prop('disabled', false).html('Submit Booking <i class="fas fa-check ms-1"></i>');
+                }
+            });
         });
+
+        // Initial load
+        loadPackages();
     });
 </script>
 </body>

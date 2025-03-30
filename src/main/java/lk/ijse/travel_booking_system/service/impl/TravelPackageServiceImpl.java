@@ -25,7 +25,7 @@ public class TravelPackageServiceImpl implements TravelPackageService {
         if (travelPackageRepository.existsById(travelPackageDTO.gettPackageId())){
             return false;
         }else {
-            System.out.println("Serive elat awa"+travelPackageDTO);
+            System.out.println("Serive ekat awa"+travelPackageDTO);
             travelPackageRepository.save(modelMapper.map(travelPackageDTO, TravelPackage.class));
             return true;
         }

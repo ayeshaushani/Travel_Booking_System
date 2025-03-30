@@ -301,11 +301,23 @@
     <!-- Package Start -->
     <div class="container-xxl py-5">
         <div class="container">
-            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+           <!-- <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                 <h6 class="section-title bg-white text-center text-primary px-3">Packages</h6>
                 <h1 class="mb-5">Awesome Packages</h1>
+            </div>-->
+            <div class="container-xxl py-5">
+                <div class="container">
+                    <div class="text-center">
+                        <h6 class="section-title bg-white text-primary px-3">Packages</h6>
+                        <h1 class="mb-5">Awesome Packages</h1>
+                    </div>
+                    <div class="row g-4 justify-content-center" id="packagContainer">
+                        <!-- AJAX will insert package cards here -->
+                    </div>
+                </div>
             </div>
-            <div class="row g-4 justify-content-center">
+
+            <!--<div class="row g-4 justify-content-center">
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="package-item">
                         <div class="overflow-hidden">
@@ -387,7 +399,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
     <!-- Package End -->
@@ -396,10 +408,10 @@
     <!-- Booking Start -->
     <div class="container-xxl py-5">
         <div class="container">
-            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+           <!-- <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                 <h6 class="section-title bg-white text-center text-primary px-3">Packages</h6>
                 <h1 class="mb-5">Awesome Packages</h1>
-            </div>
+            </div>-->
             <div class="row g-4 justify-content-center" id="packageContainer">
                 <!-- Packages will be loaded here dynamically -->
                 <div class="col-12 text-center">
@@ -410,7 +422,7 @@
             </div>
         </div>
     </div>
- <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
         <div class="container">
             <div class="booking p-5">
                 <div class="row g-5 align-items-center">
@@ -732,27 +744,27 @@
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <!-- Template Javascript -->
+
+    <script src="js/main.js"></script>
 </body>
-<script>$(document).ready(function () {
-    loadPackages();
-});
+<script>
+    // Load packages and display as cards
+    function loadPackages() {
+        $.ajax({
+            url: "http://localhost:8080/travel-packages/getAll",
+            type: "GET",
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('jwtToken')
+            },
+            dataType: "json",
+            success: function(data) {
+                const packageContainer = $("#packageContainer");
+                packageContainer.empty(); // Clear previous data
 
-function loadPackages() {
-    $.ajax({
-        url: "http://localhost:8080/travel-packages/getAll",
-        type: "GET",
-        headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('jwtToken')
-        },
-        dataType: "json",
-        success: function (data) {
-            const packageContainer = $("#packageContainer");
-            packageContainer.empty(); // Clear previous data
-
-            $.each(data, function (index, package) {
-                const imageUrl = `data:image/jpeg;base64,${package.image}`;
-                const packageCard = `
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                $.each(data, function(index, package) {
+                    const imageUrl = `data:image/jpeg;base64,${package.image}`; // Image from base64
+                    const packageCard = `
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.${index + 1}s">
                         <div class="package-item">
                             <div class="overflow-hidden">
                                 <img class="img-fluid" src="${imageUrl}" alt="${package.name}">
@@ -778,15 +790,28 @@ function loadPackages() {
                             </div>
                         </div>
                     </div>`;
-                packageContainer.append(packageCard);
-            });
-        },
-        error: function (xhr, status, error) {
-            console.error("Error loading packages:", error);
-            alert("Failed to load packages. Please try again.");
-        }
+                    packageContainer.append(packageCard);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error("Error loading packages:", xhr.status, error);
+
+                if (xhr.status === 403) {
+                    alert("Access Denied! Please log in again.");
+                    localStorage.removeItem("jwtToken"); // Clear invalid token
+                    window.location.href = "login.html"; // Redirect to login page
+                } else {
+                    alert("Failed to load packages. Please try again.");
+                }
+            }
+        });
+    }
+
+    // Call function on page load
+    $(document).ready(function () {
+        loadPackages();
     });
-}
+
 </script>
 
 </html>
