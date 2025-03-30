@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide Profile | Travel Experts</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+        }
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .guide-header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .guide-img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .badge-custom {
+            background-color: var(--primary-color);
+        }
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            margin-right: 10px;
+            transition: all 0.3s;
+        }
+        .social-icon:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+        .nav-pills .nav-link.active {
+            background-color: var(--primary-color);
+        }
+        .nav-pills .nav-link {
+            color: var(--secondary-color);
+        }
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            border: none;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .availability-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .language-progress {
+            height: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container py-5">
+    <!-- Guide Profile Header -->
+    <div class="guide-header p-4 mb-4">
+        <div class="row align-items-center">
+            <div class="col-md-3 text-center">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Guide Photo" class="guide-img rounded-circle mb-3">
+            </div>
+            <div class="col-md-6">
+                <h1 class="mb-1">John Smith</h1>
+                <p class="lead mb-2">Professional Tour Guide</p>
+                <div class="d-flex flex-wrap mb-3">
+                        <span class="badge badge-custom rounded-pill me-2 mb-2 p-2">
+                            <i class="fas fa-map-marker-alt me-1"></i> Colombo, Sri Lanka
+                        </span>
+                    <span class="badge badge-custom rounded-pill me-2 mb-2 p-2">
+                            <i class="fas fa-star me-1"></i> 4.9 (128 reviews)
+                        </span>
+                    <span class="badge badge-custom rounded-pill me-2 mb-2 p-2">
+                            <i class="fas fa-calendar-check me-1"></i> 5+ years experience
+                        </span>
+                </div>
+                <div class="social-links">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="col-md-3 text-center text-md-end">
+                <button class="btn btn-light btn-lg mb-2 w-100">
+                    <i class="fas fa-envelope me-2"></i> Contact
+                </button>
+                <button class="btn btn-warning btn-lg w-100">
+                    <i class="fas fa-calendar-alt me-2"></i> Book Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="row">
+        <!-- Left Column -->
+        <div class="col-lg-4">
+            <!-- About Card -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-user me-2"></i> About Me</h5>
+                    <p class="card-text">Certified tour guide with extensive knowledge of Sri Lankan history, culture, and wildlife. Passionate about creating memorable experiences for travelers.</p>
+                    <hr>
+                    <h6><i class="fas fa-graduation-cap me-2"></i> Certifications</h6>
+                    <ul>
+                        <li>SLITHM Certified Tour Guide</li>
+                        <li>Wildlife Safari Specialist</li>
+                        <li>First Aid Certified</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Languages Card -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-language me-2"></i> Languages</h5>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span>English</span>
+                            <span>Fluent</span>
+                        </div>
+                        <div class="progress language-progress">
+                            <div class="progress-bar bg-success" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span>Sinhala</span>
+                            <span>Native</span>
+                        </div>
+                        <div class="progress language-progress">
+                            <div class="progress-bar bg-success" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span>Tamil</span>
+                            <span>Intermediate</span>
+                        </div>
+                        <div class="progress language-progress">
+                            <div class="progress-bar bg-info" style="width: 65%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Specialties Card -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-award me-2"></i> Specialties</h5>
+                    <div class="d-flex flex-wrap">
+                        <span class="badge bg-light text-dark me-2 mb-2 p-2">Cultural Tours</span>
+                        <span class="badge bg-light text-dark me-2 mb-2 p-2">Historical Sites</span>
+                        <span class="badge bg-light text-dark me-2 mb-2 p-2">Wildlife Safaris</span>
+                        <span class="badge bg-light text-dark me-2 mb-2 p-2">Food Tours</span>
+                        <span class="badge bg-light text-dark me-2 mb-2 p-2">Adventure Tours</span>
+                        <span class="badge bg-light text-dark me-2 mb-2 p-2">Photography</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="col-lg-8">
+            <!-- Navigation Tabs -->
+            <ul class="nav nav-pills mb-4" id="guideTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="tours-tab" data-bs-toggle="pill" data-bs-target="#tours" type="button">My Tours</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="reviews-tab" data-bs-toggle="pill" data-bs-target="#reviews" type="button">Reviews</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="availability-tab" data-bs-toggle="pill" data-bs-target="#availability" type="button">Availability</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="gallery-tab" data-bs-toggle="pill" data-bs-target="#gallery" type="button">Gallery</button>
+                </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content" id="guideTabContent">
+                <!-- Tours Tab -->
+                <div class="tab-pane fade show active" id="tours" role="tabpanel">
+                    <div class="card mb-3">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="https://via.placeholder.com/300x200" class="img-fluid rounded-start h-100" alt="Tour Image">
+                                <span class="availability-badge badge bg-success">Available</span>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Colombo City Exploration</h5>
+                                    <p class="card-text">Discover the vibrant capital of Sri Lanka with its colonial architecture, bustling markets, and rich cultural heritage.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <span class="text-warning"><i class="fas fa-star"></i> 4.8</span>
+                                            <span class="ms-3"><i class="fas fa-clock"></i> 6 hours</span>
+                                        </div>
+                                        <span class="h5 text-primary">Rs. 12,500</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="https://via.placeholder.com/300x200" class="img-fluid rounded-start h-100" alt="Tour Image">
+                                <span class="availability-badge badge bg-success">Available</span>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Sigiriya & Dambulla Adventure</h5>
+                                    <p class="card-text">Explore the ancient rock fortress of Sigiriya and the magnificent cave temples of Dambulla.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <span class="text-warning"><i class="fas fa-star"></i> 4.9</span>
+                                            <span class="ms-3"><i class="fas fa-clock"></i> Full Day</span>
+                                        </div>
+                                        <span class="h5 text-primary">Rs. 25,000</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reviews Tab -->
+                <div class="tab-pane fade" id="reviews" role="tabpanel">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="d-flex mb-3">
+                                <img src="https://randomuser.me/api/portraits/women/44.jpg" class="rounded-circle me-3" width="50" height="50" alt="User">
+                                <div>
+                                    <h6 class="mb-0">Sarah Johnson</h6>
+                                    <div class="text-warning mb-1">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <small class="text-muted">March 15, 2023</small>
+                                </div>
+                            </div>
+                            <p>John was an excellent guide! His knowledge of Sri Lankan history was impressive, and he tailored the tour perfectly to our interests.</p>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="d-flex mb-3">
+                                <img src="https://randomuser.me/api/portraits/men/22.jpg" class="rounded-circle me-3" width="50" height="50" alt="User">
+                                <div>
+                                    <h6 class="mb-0">Michael Chen</h6>
+                                    <div class="text-warning mb-1">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <small class="text-muted">January 5, 2023</small>
+                                </div>
+                            </div>
+                            <p>We had a wonderful time exploring Colombo with John. He showed us hidden gems we would never have found on our own.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Availability Tab -->
+                <div class="tab-pane fade" id="availability" role="tabpanel">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Schedule a Tour</h5>
+                            <div id="calendar"></div>
+                            <div class="mt-4">
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle me-2"></i> Green dates indicate availability. Click on a date to book.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Tab -->
+                <div class="tab-pane fade" id="gallery" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <img src="https://via.placeholder.com/300x200" class="img-fluid rounded" alt="Gallery Image">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <img src="https://via.placeholder.com/300x200" class="img-fluid rounded" alt="Gallery Image">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <img src="https://via.placeholder.com/300x200" class="img-fluid rounded" alt="Gallery Image">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <img src="https://via.placeholder.com/300x200" class="img-fluid rounded" alt="Gallery Image">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <img src="https://via.placeholder.com/300x200" class="img-fluid rounded" alt="Gallery Image">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <img src="https://via.placeholder.com/300x200" class="img-fluid rounded" alt="Gallery Image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Calendar JS (Example using FullCalendar) -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize calendar
+        const calendarEl = document.getElementById('calendar');
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            events: [
+                {
+                    title: 'Available',
+                    start: '2023-11-10',
+                    color: '#28a745'
+                },
+                {
+                    title: 'Available',
+                    start: '2023-11-15',
+                    color: '#28a745'
+                },
+                {
+                    title: 'Booked',
+                    start: '2023-11-20',
+                    color: '#dc3545'
+                }
+            ],
+            dateClick: function(info) {
+                alert('Clicked on: ' + info.dateStr);
+                // You can add booking logic here
+            }
+        });
+        calendar.render();
+    });
+</script>
+</body>
+</html>
