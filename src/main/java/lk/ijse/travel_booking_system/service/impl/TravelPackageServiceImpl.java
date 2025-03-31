@@ -21,9 +21,11 @@ public class TravelPackageServiceImpl implements TravelPackageService {
     private ModelMapper modelMapper;
     @Override
     public boolean saveTravelPackage(TravelPackageDTO travelPackageDTO) {
-
+   // TravelPackage travelPackage = new TravelPackage();
         if (travelPackageRepository.existsById(travelPackageDTO.gettPackageId())){
+         //   travelPackage.settPackageId(travelPackageDTO.gettPackageId());
             return false;
+
         }else {
             System.out.println("Serive ekat awa"+travelPackageDTO);
             travelPackageRepository.save(modelMapper.map(travelPackageDTO, TravelPackage.class));

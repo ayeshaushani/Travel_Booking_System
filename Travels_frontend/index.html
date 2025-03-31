@@ -104,10 +104,11 @@
                 <div class="row justify-content-center py-5">
                     <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
                         <h1 class="display-3 text-white mb-3 animated slideInDown">Enjoy Your Vacation With Us</h1>
-                        <p class="fs-4 text-white mb-4 animated slideInDown">Tempor erat elitr rebum at clita diam amet diam et eos erat ipsum lorem sit</p>
+                        <p class="fs-4 text-white mb-4 animated slideInDown">"Seamless travel bookings for unforgettable journeys."</p>
                         <div class="position-relative w-75 mx-auto animated slideInDown">
-                            <input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text" placeholder="Eg: Thailand">
-                            <button type="button" class="btn btn-primary rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2" style="margin-top: 7px;">Search</button>
+                            <a href="package.html">
+                                <button type="button" class="btn btn-primary rounded-pill py-2 px-4">Search</button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -550,7 +551,7 @@
                             <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
                         </div>
                         <div class="text-center p-4">
-                            <h5 class="mb-0">Full Name</h5>
+                            <h5 class="mb-0">John Arnal</h5>
                            <a href="guide/guide02.html"> <small>Read more</small></a>
                         </div>
                     </div>
@@ -799,7 +800,7 @@
                 if (xhr.status === 403) {
                     alert("Access Denied! Please log in again.");
                     localStorage.removeItem("jwtToken"); // Clear invalid token
-                    window.location.href = "login.html"; // Redirect to login page
+                    window.location.href = "admin/login.html"; // Redirect to login page
                 } else {
                     alert("Failed to load packages. Please try again.");
                 }

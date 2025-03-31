@@ -135,6 +135,7 @@ function editPackage(packageId) {
         },
         success: function (package) {
             // Populate form with existing data
+            $("#id").val(package.id);
             $("#name").val(package.name);
             $("#destination").val(package.destination);
             $("#duration").val(package.duration);
@@ -168,6 +169,7 @@ function updatePackage() {
     }
 
     const formData = new FormData();
+    formData.append("id", $("#id").val());
     formData.append("name", $("#name").val());
     formData.append("destination", $("#destination").val());
     formData.append("duration", $("#duration").val());
