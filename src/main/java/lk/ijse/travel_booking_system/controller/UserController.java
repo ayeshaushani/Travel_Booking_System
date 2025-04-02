@@ -26,4 +26,5 @@ public class UserController {
     public ResponseEntity<JWTAuthResponse> saveUser(@RequestBody SignUp signUp){
         return ResponseEntity.ok(authenticationService.signUp(signUp));
     }
+
 }
