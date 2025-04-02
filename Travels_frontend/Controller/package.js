@@ -1,4 +1,7 @@
 // Display message in message box
+console.log("token",localStorage.getItem("jwtToken"))
+
+
 function showMessage(msg, type) {
     const messageBox = document.getElementById("messageBox");
     messageBox.innerText = msg;
@@ -12,9 +15,11 @@ function showMessage(msg, type) {
 // Handle form submission for creating or editing a package
 $(document).ready(function() {
     $("#packageForm").submit(function(event) {
+
         event.preventDefault();
 
         let formData = new FormData();
+        formData.append("tPackageId",$("#id").val());
         formData.append("name", $("#name").val());
         formData.append("destination", $("#destination").val());
         formData.append("duration", $("#duration").val());

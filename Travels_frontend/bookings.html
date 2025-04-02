@@ -118,13 +118,7 @@
         const token = localStorage.getItem('jwtToken');
         const userId = localStorage.getItem('userId');
 
-        if (!token || !userId) {
-            console.log('User not authenticated, redirecting to login');
-            setTimeout(() => {
-                window.location.href = 'login.html';
-            }, 100);
-            return;
-        }
+       
 
         let selectedPackage = null;
         const apiBaseUrl = 'http://localhost:8080';
@@ -179,6 +173,7 @@
                     });
                 },
                 error: function(xhr, status, error) {
+                    alert("error")
                     console.error('Error loading packages:', error);
                     $('#packageContainer').html(`
                     <div class="col-12 text-center py-4">
@@ -251,7 +246,7 @@
         });
 
         // Initial load
-        loadPackages();
+       loadPackages();
     });
 </script>
 </body>

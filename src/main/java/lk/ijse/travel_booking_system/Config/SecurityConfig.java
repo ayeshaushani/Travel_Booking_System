@@ -51,7 +51,9 @@ public class SecurityConfig {
         http
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(req->req.requestMatchers("/auth/**")
+                .authorizeHttpRequests(req->req.requestMatchers("/auth/**"
+                            //    "/travel-packages"
+                                )
                         .permitAll()
                         .anyRequest()
                         .authenticated())

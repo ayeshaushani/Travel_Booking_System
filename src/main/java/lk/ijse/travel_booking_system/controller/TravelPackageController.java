@@ -26,11 +26,11 @@ public class TravelPackageController {
     @Autowired
     private TravelPackageService travelPackageService;
 
-   // private static final String UPLOAD_DIR = "uploads/";
+    // private static final String UPLOAD_DIR = "uploads/";
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TravelPackageDTO> saveTravelPackage(
-            @RequestPart("tPackageId")String id,
+            @RequestPart("tPackageId") String id,
             @RequestPart("name") String name,
             @RequestPart("destination") String destination,
             @RequestPart("duration") String duration,
@@ -38,9 +38,10 @@ public class TravelPackageController {
             @RequestPart("description") String description,
             @RequestPart("image") MultipartFile imageFile) {
 
-
+        try {
+            System.out.println(id);
             Double priceDouble = Double.parseDouble(price);
-           Long idLong = Long.parseLong(id);
+            Long idLong = Long.parseLong(id);
 
             TravelPackageDTO travelPackageDTO = new TravelPackageDTO();
 
@@ -52,17 +53,20 @@ public class TravelPackageController {
             travelPackageDTO.setDescription(description);
 
 
-
             String imagePath = PicEncoder.generatePicture(imageFile);
 
             travelPackageDTO.setImage(imagePath);
-        System.out.println("controller ekata awa" +travelPackageDTO);
-            boolean save =   travelPackageService.saveTravelPackage(travelPackageDTO);
+            System.out.println("controller ekata awa" + travelPackageDTO);
+            boolean save = travelPackageService.saveTravelPackage(travelPackageDTO);
 
-      if (save){
-          return new ResponseEntity<>(HttpStatus.OK);
-      }
-      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            if (save) {
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
 
     }
 
