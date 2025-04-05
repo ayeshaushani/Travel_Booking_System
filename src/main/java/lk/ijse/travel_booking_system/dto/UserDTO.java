@@ -6,17 +6,13 @@ import lombok.Builder;
 
 public class UserDTO {
     private Long userId;
-    private String name;
     private String email;
-    private String phoneNumber;
     private String role;
     private String password;
 
-    public UserDTO(Long userId, String name, String email, String phoneNumber, String role, String password) {
+    public UserDTO(Long userId, String email, String role, String password) {
         this.userId = userId;
-        this.name = name;
         this.email = email;
-        this.phoneNumber = phoneNumber;
         this.role = role;
         this.password = password;
     }
@@ -40,14 +36,6 @@ public class UserDTO {
         this.userId = userId;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -56,13 +44,6 @@ public class UserDTO {
         this.email = email;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
 
     public String getRole() {
         return role;
@@ -76,9 +57,7 @@ public class UserDTO {
     public String toString() {
         return "UserDTO{" +
                 "userId=" + userId +
-                ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
                 ", role='" + role + '\'' +
                 '}';
     }
