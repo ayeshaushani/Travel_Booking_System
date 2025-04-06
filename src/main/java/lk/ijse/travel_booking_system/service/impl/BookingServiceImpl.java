@@ -36,7 +36,8 @@ public class BookingServiceImpl implements BookingService {
                         tpkg.getImage(),
                         tpkg.getDuration(),
                         tpkg.getPrice(),
-                        tpkg.getDescription()
+                        tpkg.getDescription(),
+                        tpkg.getGuide()
                         )).collect(Collectors.toList());
     }
 

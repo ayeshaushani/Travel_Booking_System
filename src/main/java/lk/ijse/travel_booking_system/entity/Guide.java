@@ -9,6 +9,7 @@ public class Guide {
     private Long guideId;
     private String name;
     private String contact;
+    private String email;
     private int experience;
 
     @ManyToOne
@@ -18,12 +19,21 @@ public class Guide {
     public Guide() {
     }
 
-    public Guide(Long guideId, String name, String contact, int experience, TravelPackage travelPackage) {
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Guide(Long guideId, String name, String contact, int experience, TravelPackage travelPackage , String email) {
         this.guideId = guideId;
         this.name = name;
         this.contact = contact;
         this.experience = experience;
         this.travelPackage = travelPackage;
+        this.email = email;
     }
 
     public Long getGuideId() {
@@ -72,6 +82,7 @@ public class Guide {
                 "guideId=" + guideId +
                 ", name='" + name + '\'' +
                 ", contact='" + contact + '\'' +
+                ", email='" + email + '\'' +
                 ", experience=" + experience +
                 ", travelPackage=" + travelPackage +
                 '}';

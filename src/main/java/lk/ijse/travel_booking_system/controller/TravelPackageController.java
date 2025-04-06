@@ -36,6 +36,7 @@ public class TravelPackageController {
             @RequestPart("duration") String duration,
             @RequestPart("price") String price,
             @RequestPart("description") String description,
+            @RequestPart("guide") String guide,
             @RequestPart("image") MultipartFile imageFile) {
 
         try {
@@ -51,6 +52,7 @@ public class TravelPackageController {
             travelPackageDTO.setDuration(duration);
             travelPackageDTO.setPrice(priceDouble);
             travelPackageDTO.setDescription(description);
+            travelPackageDTO.setGuide(guide);
 
 
             String imagePath = PicEncoder.generatePicture(imageFile);

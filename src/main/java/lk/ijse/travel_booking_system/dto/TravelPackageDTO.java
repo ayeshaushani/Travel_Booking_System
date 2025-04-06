@@ -8,11 +8,12 @@ public class TravelPackageDTO {
     private double price;
     private String description;
     private String image;
+    private String guide;
 
     public TravelPackageDTO() {
     }
 
-    public TravelPackageDTO(Long tPackageId, String name, String destination, String image, String duration, double price, String description) {
+    public TravelPackageDTO(Long tPackageId, String name, String destination, String image, String duration, double price, String description, String guide) {
         this.tPackageId = tPackageId;
         this.name = name;
         this.destination = destination;
@@ -20,6 +21,7 @@ public class TravelPackageDTO {
         this.duration = duration;
         this.price = price;
         this.description = description;
+        this.guide = guide;
     }
 
     public Long gettPackageId() {
@@ -77,6 +79,13 @@ public class TravelPackageDTO {
     public void setDescription(String description) {
         this.description = description;
     }
+    public String getGuide() {
+        return guide;
+    }
+
+    public void setGuide(String guide) {
+        this.guide = guide;
+    }
 
     @Override
     public String toString() {
@@ -88,6 +97,7 @@ public class TravelPackageDTO {
                 ", duration='" + duration + '\'' +
                 ", price=" + price +
                 ", description='" + description + '\'' +
+                ", guide='" + guide + '\'' +
                 '}';
     }
 }

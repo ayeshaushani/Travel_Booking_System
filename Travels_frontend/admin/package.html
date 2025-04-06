@@ -83,6 +83,16 @@
             <div class="form-group">
                 <textarea id="description" name="description" placeholder="Description" required></textarea>
             </div>
+            <label>Guide   -:</label>
+            <select id="guide">
+                <option value="John">Jheny Smith</option>
+                <option value="Jane">Arnal Jhons</option>
+                <option value="Jane">Amenda croose</option>
+                <option value="Jane">Harald cooray</option>
+
+            </select>
+            <br>
+            <br>
             <div class="form-group">
                 <input type="file" id="image" name="image" accept="image/*" required>
                 <img id="imagePreview" class="image-preview" style="display:none;">
@@ -100,11 +110,13 @@
     <table id="packagesTable">
         <thead>
         <tr>
+            <th>Id</th>
             <th>Name</th>
             <th>Destination</th>
             <th>Duration</th>
             <th>Price</th>
             <th>Description</th>
+            <th>Guide</th>
             <th>Image</th>
             <th>Actions</th>
         </tr>

@@ -16,19 +16,17 @@ public class TravelPackage {
     private String description;
     @Column(columnDefinition = "LONGTEXT")
     private String image;
+    private String guide;
 
     @OneToMany(mappedBy = "travelPackage", cascade = CascadeType.ALL)
     private List<Booking> bookings;
-
-    @OneToMany(mappedBy = "travelPackage", cascade = CascadeType.ALL)
-    private List<Guide> guides;
 
     @OneToMany(mappedBy = "travelPackage", cascade = CascadeType.ALL)
     private List<Review> reviews;
 
     public TravelPackage() {
     }
-    public TravelPackage(Long tPackageId, String name, String destination, String duration, double price, String description, String image, List<Booking> bookings, List<Guide> guides, List<Review> reviews) {
+    public TravelPackage(Long tPackageId, String name, String destination, String duration, double price, String description, String image, List<Booking> bookings, List<Review> reviews) {
         this.tPackageId = tPackageId;
         this.name = name;
         this.destination = destination;
@@ -36,8 +34,9 @@ public class TravelPackage {
         this.price = price;
         this.description = description;
         this.image = image;
+        this.guide = guide;
         this.bookings = bookings;
-        this.guides = guides;
+
         this.reviews = reviews;
     }
 
@@ -99,6 +98,9 @@ public class TravelPackage {
         System.out.println("Setting image: " + image);
         this.image = image;
     }
+    public String getGuide() {return guide;}
+
+    public void setGuide(String guide) {this.guide = guide;}
 
     public List<Booking> getBookings() {
         return bookings;
@@ -108,13 +110,6 @@ public class TravelPackage {
         this.bookings = bookings;
     }
 
-    public List<Guide> getGuides() {
-        return guides;
-    }
-
-    public void setGuides(List<Guide> guides) {
-        this.guides = guides;
-    }
 
     public List<Review> getReviews() {
         return reviews;
@@ -123,6 +118,7 @@ public class TravelPackage {
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
     }
+
 
     @Override
     public String toString() {
@@ -135,7 +131,6 @@ public class TravelPackage {
                 ", description='" + description + '\'' +
                 ", image='" + image + '\'' +
                 ", bookings=" + bookings +
-                ", guides=" + guides +
                 ", reviews=" + reviews +
                 '}';
     }

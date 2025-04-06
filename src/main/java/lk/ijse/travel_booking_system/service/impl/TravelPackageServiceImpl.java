@@ -43,7 +43,8 @@ public class TravelPackageServiceImpl implements TravelPackageService {
                 travelPackage.getImage(),
                 travelPackage.getDuration(),
                 travelPackage.getPrice(),
-                travelPackage.getDescription()
+                travelPackage.getDescription(),
+                travelPackage.getGuide()
         )).collect(Collectors.toList());
     }
 
@@ -57,7 +58,8 @@ public class TravelPackageServiceImpl implements TravelPackageService {
                 travelPackage.getImage(),
                 travelPackage.getDuration(),
                 travelPackage.getPrice(),
-                travelPackage.getDescription()
+                travelPackage.getDescription(),
+                travelPackage.getGuide()
         );
     }
 
@@ -78,7 +80,8 @@ public class TravelPackageServiceImpl implements TravelPackageService {
                 travelPackage.getImage(),
                 travelPackage.getDuration(),
                 travelPackage.getPrice(),
-                travelPackage.getDescription()
+                travelPackage.getDescription(),
+                travelPackage.getGuide()
         );
     }
 

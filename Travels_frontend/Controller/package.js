@@ -25,6 +25,7 @@ $(document).ready(function() {
         formData.append("duration", $("#duration").val());
         formData.append("price", $("#price").val());
         formData.append("description", $("#description").val());
+        formData.append("guide", $("#guide").val());
 
         let imageFile = $("#image")[0].files[0]; // Image file ekata reference ekak
         if (imageFile) {
@@ -89,11 +90,13 @@ function loadPackages() {
                 const imageUrl = `http://localhost:8080/images/${package.image}`;
                 const row = `
                      <tr>
+                     <td>${package.tPackageId}</td>
                     <td>${package.name}</td>
                     <td>${package.destination}</td>
                     <td>${package.duration}</td>
                     <td>${package.price}</td>
                     <td>${package.description}</td> 
+                    <td>${package.guide}</td> 
                      <td>
                                 <img src="data:image/jpeg;base64,${package.image}" 
                                      alt="User Image" class="crop-image" 
@@ -146,6 +149,7 @@ function editPackage(packageId) {
             $("#duration").val(package.duration);
             $("#price").val(package.price);
             $("#description").val(package.description);
+            $("#guide").val(package.guide);
 
             // Set package ID in form
             $("#packageForm").data("packageId", packageId);
@@ -180,6 +184,7 @@ function updatePackage() {
     formData.append("duration", $("#duration").val());
     formData.append("price", $("#price").val());
     formData.append("description", $("#description").val());
+    formData.append("guide", $("#guide").val());
 
     // Check if a new image is selected
     const imageFile = $("#image")[0].files[0];
@@ -189,7 +194,7 @@ function updatePackage() {
 
     $.ajax({
         url: `http://localhost:8080/travel-packages/${packageId}`,
-        type: "PUT", // ✅ Use PUT for update
+        type: "PUT",
         headers: {
             "Authorization": `Bearer ${localStorage.getItem("jwtToken")}`
         },
