@@ -447,3 +447,5 @@ io.jsonwebtoken.MalformedJwtException: Invalid compact JWT string: Compact JWSs 
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.36.jar:10.1.36]
 	at java.base/java.lang.Thread.run(Thread.java:842) ~[na:na]
 
+2025-04-06T14:41:19.624+05:30  WARN 9896 --- [Travel_Booking_System] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=24m20s687ms846µs300ns).
+2025-04-06T15:02:39.577+05:30  WARN 9896 --- [Travel_Booking_System] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=11m19s791ms85µs99ns).

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login with OTP</title>
+</head>
+<body>
+<h2>Login</h2>
+<form id="login-form">
+    <input type="email" id="email" placeholder="Enter your email" required>
+    <input type="password" id="password" placeholder="Enter password" required>
+    <button type="submit">Login</button>
+</form>
+
+<div id="otp-container" style="display: none;">
+    <h2>Enter OTP</h2>
+    <input type="text" id="otp" placeholder="Enter OTP" required>
+    <button id="verify-otp">Verify OTP</button>
+</div>
+
+<script>
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        fetch('http://localhost:8080/api/login', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('jwtToken')
+            },
+            body: JSON.stringify({ email, password })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Login successful!');
+                } else if (data.otpRequired) {
+                    alert('Incorrect password! OTP sent to your email.');
+                    document.getElementById('login-form').style.display = 'none';
+                    document.getElementById('otp-container').style.display = 'block';
+                } else {
+                    alert('Login failed!');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });
+
+    document.getElementById('verify-otp').addEventListener('click', function() {
+        const email = document.getElementById('email').value;
+        const otp = document.getElementById('otp').value;
+
+        fetch('http://localhost:8080/api/verify-otp', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('jwtToken')
+            },
+            body: JSON.stringify({ email, otp })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('OTP verified! Login successful.');
+                } else {
+                    alert('Invalid OTP!');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });
+</script>
+</body>
+</html>
