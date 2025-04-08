@@ -27,4 +27,22 @@ public class UserController {
         return ResponseEntity.ok(authenticationService.signUp(signUp));
     }
 
+
+
+  /*  @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestParam String email) {
+
+        return ResponseEntity.ok(authenticationService.forgotPassword(email));
+    }
+
+    @PostMapping("/verify-otp")
+    public ResponseEntity<String> verifyOtp(@RequestParam String email, @RequestParam String otp) {
+        return ResponseEntity.ok(authenticationService.verifyOtp(email, otp));
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestParam String email, @RequestParam String newPassword) {
+        return ResponseEntity.ok(authenticationService.resetPassword(email, newPassword));
+}
+*/
 }
