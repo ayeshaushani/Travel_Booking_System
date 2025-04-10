@@ -2,72 +2,107 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login with OTP</title>
+    <title>Send OTP</title>
 </head>
+
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: #f3f4f6;
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+        margin: 0;
+
+    }
+
+
+    .otp-container {
+        background: linear-gradient(50deg,#6c757d,#2b2d42);
+        padding: 2.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        width: 80%;
+        height: 60%;
+    }
+
+    h2 {
+        color: #111827;
+        font-weight: 700;
+        margin-bottom: 1.75rem;
+        font-size: 1.625rem;
+    }
+
+    #email {
+        width: 80%;
+        padding: 0.875rem;
+        margin-bottom: 1.5rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 0.9375rem;
+        transition: all 0.2s;
+    }
+
+    #email:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        outline: none;
+    }
+
+    button {
+        width: 40%;
+        padding: 0.875rem;
+        background-color: #3b82f6;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.9375rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    button:hover {
+        background-color: #2563eb;
+    }
+</style>
 <body>
-<h2>Login</h2>
-<form id="login-form">
-    <input type="email" id="email" placeholder="Enter your email" required>
-    <input type="password" id="password" placeholder="Enter password" required>
-    <button type="submit">Login</button>
-</form>
-
-<div id="otp-container" style="display: none;">
-    <h2>Enter OTP</h2>
-    <input type="text" id="otp" placeholder="Enter OTP" required>
-    <button id="verify-otp">Verify OTP</button>
+<div class="otp-container">
+<h2>Send OTP</h2>
+<input type="email" id="email" placeholder="Enter your email">
+<button onclick="sendOTP()">Send OTP</button>
 </div>
-
 <script>
-    document.getElementById('login-form').addEventListener('submit', function(event) {
-        event.preventDefault();
+    function sendOTP() {
         const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
 
         fetch('http://localhost:8080/api/login', {
             method: 'POST',
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('jwtToken')
+                'Content-Type': 'application/json',  // Ensure this header is set
+                'Authorization': 'Bearer ' + localStorage.getItem('jwtToken')  // If you have a token in future requests
             },
-            body: JSON.stringify({ email, password })
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Login successful!');
-                } else if (data.otpRequired) {
-                    alert('Incorrect password! OTP sent to your email.');
-                    document.getElementById('login-form').style.display = 'none';
-                    document.getElementById('otp-container').style.display = 'block';
-                } else {
-                    alert('Login failed!');
-                }
+            body: JSON.stringify({
+                email: email,
+                password: "" // Leave blank for OTP login flow
             })
-            .catch(error => console.error('Error:', error));
-    });
-
-    document.getElementById('verify-otp').addEventListener('click', function() {
-        const email = document.getElementById('email').value;
-        const otp = document.getElementById('otp').value;
-
-        fetch('http://localhost:8080/api/verify-otp', {
-            method: 'POST',
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('jwtToken')
-            },
-            body: JSON.stringify({ email, otp })
         })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('OTP verified! Login successful.');
-                } else {
-                    alert('Invalid OTP!');
+            .then(async response => {
+                const text = await response.text();  // Get response as text first
+                console.log('Response Text:', text); // Log raw response to see any error details
+                const data = text ? JSON.parse(text) : {};  // Parse response if not empty
+
+                if (!response.ok) {
+                    throw new Error(data.message || "Failed to send OTP.");
                 }
+                alert(data.message);
             })
-            .catch(error => console.error('Error:', error));
-    });
+            .catch(error => {
+                console.error('Error:', error.message);
+                alert("Failed to send OTP. Try again. " + error.message);
+            });
+    }
+
 </script>
 </body>
 </html>
