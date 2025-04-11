@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/guides")
+@CrossOrigin(origins = "*")
 public class GuideController {
 
     @Autowired
