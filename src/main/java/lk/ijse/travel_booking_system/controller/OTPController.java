@@ -44,30 +44,6 @@ class OTPController {
         }
     }
 
-
-
-  /*  @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> request) {
-
-        System.out.println("otp login unaaa");
-        Map<String, Object> response = new HashMap<>();
-        Optional<User> user = userRepository.findByEmail(request.get("email"));
-        
-        if (user.isPresent() && user.get().getPassword().equals(request.get("password"))) {
-            response.put("success", true);
-            response.put("message", "Login successful");
-            return ResponseEntity.ok(response);
-        } else {
-            otpService.sendOTP(request.get("email"));
-            response.put("success", false);
-            response.put("message", "Incorrect password. OTP sent to email.");
-            return ResponseEntity.status(403).body(response);
-
-
-        }
-
-    }*/
-
     @PostMapping("/verify-otp")
     public ResponseEntity<Map<String, Object>> verifyOTP(@RequestBody Map<String, String> request) {
         Map<String, Object> response = new HashMap<>();

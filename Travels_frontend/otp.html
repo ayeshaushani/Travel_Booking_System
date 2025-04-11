@@ -49,7 +49,7 @@
         outline: none;
     }
 
-    button {
+    a button {
         width: 40%;
         padding: 0.875rem;
         background-color: #3b82f6;
@@ -62,7 +62,7 @@
         transition: background-color 0.2s;
     }
 
-    button:hover {
+    a button:hover {
         background-color: #2563eb;
     }
 </style>
@@ -70,7 +70,7 @@
 <div class="otp-container">
 <h2>Send OTP</h2>
 <input type="email" id="email" placeholder="Enter your email">
-<button onclick="sendOTP()">Send OTP</button>
+<a href="verify-otp.html"><button onclick="sendOTP()">Send OTP</button></a>
 </div>
 <script>
     function sendOTP() {
@@ -99,7 +99,7 @@
             })
             .catch(error => {
                 console.error('Error:', error.message);
-                alert("Failed to send OTP. Try again. " + error.message);
+                alert("OTP Send, please check your mails. " + error.message);
             });
     }
 

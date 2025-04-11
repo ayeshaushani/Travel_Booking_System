@@ -3,525 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travel Booking System - Sign Up</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Travel Booking</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #4361ee;
-            --primary-dark: #3a56d4;
-            --error-color: #ef233c;
-            --success-color: #4cc9f0;
-            --gray-light: #f8f9fa;
-            --gray-medium: #e9ecef;
-            --gray-dark: #adb5bd;
-            --text-color: #2b2d42;
-            --white: #ffffff;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f5f7fa;
-            color: var(--text-color);
-            line-height: 1.6;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            padding-top: 50px;
         }
 
         .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .signup-card {
-            background: var(--white);
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 450px;
+            max-width: 600px;
+            background-color: #ffffff;
             padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .brand-logo {
+        h2 {
             text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .brand-logo i {
-            font-size: 48px;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-        }
-
-        .brand-logo h1 {
-            font-size: 24px;
-            font-weight: 600;
-            color: var(--primary-color);
-        }
-
-        .signup-form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+            color: #5A5A5A;
         }
 
         .form-group label {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-color);
+            font-weight: bold;
         }
 
-        .input-with-icon {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .input-with-icon i:first-child {
-            position: absolute;
-            left: 15px;
-            color: var(--gray-dark);
-        }
-
-        .input-with-icon input,
-        .input-with-icon select {
+        .btn-primary {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
             width: 100%;
-            padding: 12px 15px 12px 45px;
-            border: 1px solid var(--gray-medium);
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            background-color: var(--gray-light);
+            padding: 12px;
+            font-size: 16px;
         }
 
-        .input-with-icon select {
+        .btn-primary:hover {
+            background-color: #45a049;
+            border-color: #45a049;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        /* Custom select styling */
+        select.form-control {
             appearance: none;
             -webkit-appearance: none;
             -moz-appearance: none;
-            cursor: pointer;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/1/1f/Arrow_down_2.svg') no-repeat right;
+            background-size: 18px;
         }
 
-        .input-with-icon input:focus,
-        .input-with-icon select:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
-        }
-
-        .password-toggle {
-            position: absolute;
-            right: 15px;
-            cursor: pointer;
-            color: var(--gray-dark);
-        }
-
-        .password-toggle:hover {
-            color: var(--primary-color);
-        }
-
-        .password-strength {
-            margin-top: 5px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .strength-meter {
-            height: 5px;
-            flex-grow: 1;
-            background-color: var(--gray-medium);
-            border-radius: 5px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .strength-meter-fill {
-            position: absolute;
-            height: 100%;
-            width: 0%;
-            background-color: var(--error-color);
-            transition: width 0.3s ease, background-color 0.3s ease;
-        }
-
-        #strengthText {
-            font-size: 12px;
-            color: var(--gray-dark);
-        }
-
-        .error-message {
-            color: var(--error-color);
-            font-size: 12px;
-            min-height: 18px;
-        }
-
-        .signup-btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 14px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .signup-btn:hover {
-            background-color: var(--primary-dark);
-        }
-
-        .spinner {
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: var(--white);
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .login-link {
-            text-align: center;
-            font-size: 14px;
-            color: var(--gray-dark);
-        }
-
-        .login-link a {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .login-link a:hover {
-            text-decoration: underline;
-        }
-
-        /* Toast notification */
-        .toast {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 12px 20px;
-            border-radius: 8px;
-            color: white;
-            font-weight: 500;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            z-index: 1000;
-            transform: translateY(-100px);
-            transition: transform 0.3s ease;
-        }
-
-        .toast.success {
-            background-color: var(--success-color);
-        }
-
-        .toast.error {
-            background-color: var(--error-color);
-        }
-
-        .toast.show {
-            transform: translateY(0);
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 480px) {
-            .signup-card {
-                padding: 30px 20px;
-            }
+        .alert {
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <div class="signup-card">
-        <div class="brand-logo">
-            <i class="fas fa-plane"></i>
-            <h1>Travel Booking</h1>
+    <h2>Travel Package Booking</h2>
+    <form id="bookingForm">
+        <div class="form-group">
+            <label for="userEmail">Email:</label>
+            <input type="email" class="form-control" id="userEmail" placeholder="Enter your email" required>
         </div>
-
-        <form id="signupForm" class="signup-form">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <div class="input-with-icon">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
-                </div>
-                <div class="error-message" id="email-error"></div>
-            </div>
-
-            <div class="form-group">
-                <label for="password">Password</label>
-                <div class="input-with-icon">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="password" name="password" placeholder="Create a password" required>
-                    <i class="fas fa-eye password-toggle" id="togglePassword"></i>
-                </div>
-                <div class="password-strength">
-                    <div class="strength-meter">
-                        <div class="strength-meter-fill" id="strengthMeterFill"></div>
-                    </div>
-                    <span id="strengthText">Weak</span>
-                </div>
-                <div class="error-message" id="password-error"></div>
-            </div>
-
-            <div class="form-group">
-                <label for="role">Role</label>
-                <div class="input-with-icon">
-                    <i class="fas fa-user-tag"></i>
-                    <select id="role" name="role" required>
-                        <option value="" disabled selected>Select your role</option>
-                        <option value="ADMIN">Admin</option>
-                        <option value="USER">User</option>
-                        <option value="AGENT">Travel Agent</option>
-                    </select>
-                </div>
-                <div class="error-message" id="role-error"></div>
-            </div>
-
-            <button type="submit" class="signup-btn" id="signupBtn">
-                <span id="btnText">Sign Up</span>
-                <div class="spinner hidden" id="spinner"></div>
-            </button>
-
-            <div class="login-link">
-                Already have an account? <a href="login.html">Log in</a>
-            </div>
-        </form>
-    </div>
+        <div class="form-group">
+            <label for="travelPackage">Travel Package:</label>
+            <select class="form-control" id="travelPackage" required>
+                <option value="">Select Package</option>
+                <!-- Options will be dynamically filled by AJAX -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="numTravelers">Number of Travelers:</label>
+            <input type="number" class="form-control" id="numTravelers" placeholder="Enter number of travelers" required>
+        </div>
+        <div class="form-group">
+            <label for="specialRequests">Special Requests:</label>
+            <textarea class="form-control" id="specialRequests" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Booking</button>
+    </form>
+    <div id="alertBox" class="alert alert-success" style="display:none;" role="alert"></div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // DOM Elements
-        const signupForm = document.getElementById('signupForm');
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
-        const roleSelect = document.getElementById('role');
-        const togglePassword = document.getElementById('togglePassword');
-        const strengthMeterFill = document.getElementById('strengthMeterFill');
-        const strengthText = document.getElementById('strengthText');
-        const signupBtn = document.getElementById('signupBtn');
-        const btnText = document.getElementById('btnText');
-        const spinner = document.getElementById('spinner');
-        const emailError = document.getElementById('email-error');
-        const passwordError = document.getElementById('password-error');
-        const roleError = document.getElementById('role-error');
-
-        // Password toggle visibility
-        togglePassword.addEventListener('click', function() {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            this.classList.toggle('fa-eye-slash');
-        });
-
-        // Password strength checker
-        passwordInput.addEventListener('input', function() {
-            const password = this.value;
-            const strength = calculatePasswordStrength(password);
-            updateStrengthIndicator(strength);
-        });
-
-        // Form submission
-        signupForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            // Validate inputs
-            const isEmailValid = validateEmail();
-            const isPasswordValid = validatePassword();
-            const isRoleValid = validateRole();
-
-            if (!isEmailValid || !isPasswordValid || !isRoleValid) {
-                return;
+    // Populate the travel package options using AJAX
+    $(document).ready(function() {
+        $.ajax({
+            url: 'http://localhost:8080/bookings/packages',
+            type: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('jwtToken')
+            },
+            success: function(data) {
+                data.forEach(function(package) {
+                    $('#travelPackage').append(new Option(package.tPackageId,package.name));
+                });
+            },
+            error: function(error) {
+                console.log("Error loading packages: ", error);
             }
+        });
 
-            // Prepare data
-            const formData = {
-                email: emailInput.value.trim(),
-                password: passwordInput.value,
-                role: roleSelect.value
+        // Handle form submission
+        $('#bookingForm').submit(function(event) {
+            event.preventDefault();
+            const bookingData = {
+                userEmail: $('#userEmail').val(),
+                tPackageId: $('#travelPackage').val(),
+                numberOfTravelers: $('#numTravelers').val(),
+                specialRequests: $('#specialRequests').val(),
+                status: "PENDING"  // Default status
             };
 
-            // Show loading state
-            btnText.textContent = 'Signing Up...';
-            spinner.classList.remove('hidden');
-            signupBtn.disabled = true;
-
-            try {
-                // Send data to server
-                const response = await fetch('http://localhost:8080/auth/signUp', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData)
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(data.message || 'Signup failed');
+            // Send the booking request to backend
+            $.ajax({
+                url: 'http://localhost:8080/bookings',
+                type: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('jwtToken')
+                },
+                contentType: 'application/json',
+                data: JSON.stringify(bookingData),
+                success: function(response) {
+                    $('#alertBox').text('Booking created successfully!').show();
+                    $('#bookingForm')[0].reset();
+                },
+                error: function(error) {
+                    $('#alertBox').text('Error creating booking: ' + error.responseText).show();
                 }
-
-                // Success handling
-                showToast('Signup successful! Redirecting...', 'success');
-
-                // Redirect to login or dashboard after delay
-                setTimeout(() => {
-                    window.location.href = formData.role === 'ADMIN' ? "/AdminDashBoard.html" : '/index.html';
-                }, 1500);
-
-            } catch (error) {
-                // Error handling
-                showToast(error.message || 'Signup failed. Please try again.', 'error');
-                console.error('Signup error:', error);
-            } finally {
-                // Reset button state
-                btnText.textContent = 'Sign Up';
-                spinner.classList.add('hidden');
-                signupBtn.disabled = false;
-            }
+            });
         });
-
-        // Input validation functions
-        function validateEmail() {
-            const email = emailInput.value.trim();
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-            if (!email) {
-                setError(emailInput, emailError, 'Email cannot be empty');
-                return false;
-            }
-
-            if (!emailRegex.test(email)) {
-                setError(emailInput, emailError, 'Please enter a valid email address');
-                return false;
-            }
-
-            clearError(emailInput, emailError);
-            return true;
-        }
-
-        function validatePassword() {
-            const password = passwordInput.value;
-
-            if (!password) {
-                setError(passwordInput, passwordError, 'Password cannot be empty');
-                return false;
-            }
-
-            if (password.length < 8) {
-                setError(passwordInput, passwordError, 'Password must be at least 8 characters');
-                return false;
-            }
-
-            clearError(passwordInput, passwordError);
-            return true;
-        }
-
-        function validateRole() {
-            const role = roleSelect.value;
-
-            if (!role) {
-                setError(roleSelect, roleError, 'Please select a role');
-                return false;
-            }
-
-            clearError(roleSelect, roleError);
-            return true;
-        }
-
-        // Helper functions
-        function setError(input, errorElement, message) {
-            errorElement.textContent = message;
-            input.style.borderColor = 'var(--error-color)';
-        }
-
-        function clearError(input, errorElement) {
-            errorElement.textContent = '';
-            input.style.borderColor = 'var(--gray-medium)';
-        }
-
-        function showToast(message, type) {
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.textContent = message;
-            document.body.appendChild(toast);
-
-            setTimeout(() => {
-                toast.classList.add('show');
-            }, 10);
-
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
-        }
-
-        function calculatePasswordStrength(password) {
-            let strength = 0;
-
-            // Length check
-            if (password.length >= 8) strength += 1;
-            if (password.length >= 12) strength += 1;
-
-            // Character variety
-            if (/[A-Z]/.test(password)) strength += 1; // Uppercase
-            if (/[a-z]/.test(password)) strength += 1; // Lowercase
-            if (/[0-9]/.test(password)) strength += 1; // Numbers
-            if (/[^A-Za-z0-9]/.test(password)) strength += 1; // Special chars
-
-            // Cap at 5 for our meter
-            return Math.min(strength, 5);
-        }
-
-        function updateStrengthIndicator(strength) {
-            const percentage = (strength / 5) * 100;
-            let color, text;
-
-            if (strength <= 2) {
-                color = 'var(--error-color)';
-                text = 'Weak';
-            } else if (strength <= 3) {
-                color = '#ffbe0b';
-                text = 'Fair';
-            } else if (strength <= 4) {
-                color = '#4cc9f0';
-                text = 'Good';
-            } else {
-                color = '#38b000';
-                text = 'Strong';
-            }
-
-            strengthMeterFill.style.width = `${percentage}%`;
-            strengthMeterFill.style.backgroundColor = color;
-            strengthText.textContent = text;
-            strengthText.style.color = color;
-        }
     });
 </script>
 </body>

@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/bookings")
+
 public class BookingController {
 
     @Autowired
@@ -21,6 +23,7 @@ public class BookingController {
 
     @PostMapping
     public ResponseEntity<BookingDTO> saveBooking(@RequestBody BookingDTO bookingDTO) {
+        System.out.println(bookingDTO);
         return ResponseEntity.ok(bookingService.saveBooking(bookingDTO));
     }
 

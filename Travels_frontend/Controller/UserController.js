@@ -6,8 +6,8 @@ $('#signInForm').on('submit', function (event) {
     const password = $('#password').val();
 
     const signInDTO = {
-        email:email,
-        password:password
+        email: email,
+        password: password
     }
 
     $.ajax({
@@ -26,4 +26,11 @@ $('#signInForm').on('submit', function (event) {
             $('#responseMessage').text(errorMessage).css("color", "red").show();
         }
     });
+
+   /* document.getElementById('forgotPasswordButton').addEventListener("click", function () {
+        window.location.href = "../otp.html";
+    });*/
+
+
+
 });

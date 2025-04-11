@@ -6,17 +6,21 @@ public class BookingDTO {
     private String status;
     private Long userId;
     private Long tPackageId;
-
-
+    private String userEmail;
+    private int numberOfTravelers;
+    private String specialRequests;
     public BookingDTO() {
     }
 
-    public BookingDTO(Long bookingId, String bookingDate, String status, Long userId, Long tPackageId) {
+    public BookingDTO(Long bookingId, String bookingDate, String status, Long userId, Long tPackageId, String userEmail, int numberOfTravelers, String specialRequests) {
         this.bookingId = bookingId;
         this.bookingDate = bookingDate;
         this.status = status;
         this.userId = userId;
         this.tPackageId = tPackageId;
+        this.userEmail = userEmail;
+        this.numberOfTravelers = numberOfTravelers;
+        this.specialRequests = specialRequests;
     }
 
     public Long getBookingId() {
@@ -59,6 +63,18 @@ public class BookingDTO {
         this.tPackageId = tPackageId;
     }
 
+    public String getUserEmail() {return userEmail;}
+
+    public void setUserEmail(String userEmail) {this.userEmail = userEmail;}
+
+    public int getNumberOfTravelers() {return numberOfTravelers;}
+
+    public void setNumberOfTravelers(int numberOfTravelers) {this.numberOfTravelers = numberOfTravelers;}
+
+    public String getSpecialRequests() {return specialRequests;}
+
+    public void setSpecialRequests(String specialRequests) {this.specialRequests = specialRequests;}
+
     @Override
     public String toString() {
         return "BookingDTO{" +
@@ -67,6 +83,9 @@ public class BookingDTO {
                 ", status='" + status + '\'' +
                 ", userId=" + userId +
                 ", tPackageId=" + tPackageId +
+                ", userEmail='" + userEmail + '\'' +
+                ", numberOfTravelers=" + numberOfTravelers +
+                ", specialRequests='" + specialRequests + '\'' +
                 '}';
     }
 }

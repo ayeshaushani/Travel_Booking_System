@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Verify OTP</title>
+</head>
+<style>
+    :root {
+        --primary-color: #4361ee;
+        --primary-hover: #3a56d4;
+        --text-color: #2b2d42;
+        --light-gray: #f8f9fa;
+        --border-color: #e9ecef;
+        --error-color: #ef233c;
+        --success-color: #4cc9f0;
+    }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: linear-gradient(50deg, gray,#2b2d42);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+
+    .otp-container {
+        background: #b0dcea;
+        padding: 2.5rem;
+        border-radius: 16px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        width: 100%;
+        max-width: 420px;
+        text-align: center;
+        animation: fadeIn 0.4s ease-out;
+    }
+
+    h2 {
+        margin: 0 0 1.5rem 0;
+        font-weight: 700;
+        font-size: 1.75rem;
+        color: var(--text-color);
+    }
+
+    input {
+        width: 100%;
+        padding: 0.875rem 1rem;
+        margin-bottom: 1rem;
+        border: 2px solid var(--border-color);
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+    }
+
+    input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+    }
+
+    input::placeholder {
+        color: #adb5bd;
+    }
+
+    button {
+        width: 100%;
+        padding: 0.875rem;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 0.5rem;
+    }
+
+    button:hover {
+        background-color: var(--primary-hover);
+        transform: translateY(-2px);
+    }
+
+    button:active {
+        transform: translateY(0);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+        .otp-container {
+            padding: 1.75rem;
+            border-radius: 12px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+<body>
+<div class="otp-container">
+<h2>Verify OTP</h2>
+<input type="email" id="email" placeholder="Enter your email"><br><br>
+<input type="text" id="otp" placeholder="Enter OTP"><br><br>
+<button onclick="verifyOTP()">Verify OTP</button>
+</div>
+<script>
+    function verifyOTP() {
+        const email = document.getElementById('email').value;
+        const otp = document.getElementById('otp').value;
+
+        fetch('http://localhost:8080/api/verify-otp', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',  // Ensure this header is set
+                'Authorization': 'Bearer ' + localStorage.getItem('jwtToken')  // If you have a token in future requests
+            },
+            body: JSON.stringify({ email: email, otp: otp })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP status ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert(data.message);
+                // You can redirect to reset-password page or dashboard here
+                window.location.href = 'index.html';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("OTP verification failed!");
+            });
+    }
+</script>
+</body>
+</html>

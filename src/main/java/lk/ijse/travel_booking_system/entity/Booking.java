@@ -8,12 +8,13 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookingId;
     private String bookingDate;
-    private String status; // Pending, Confirmed, Canceled
+    private String status;
+
     @Column(name = "user_email")
-    private String userEmail;  // New field for user email
+    private String userEmail;
 
     @Column(name = "number_of_travelers")
-    private int numberOfTravelers;  // New field for number of travelers
+    private int numberOfTravelers;
 
     @Column(name = "special_requests")
     private String specialRequests;
@@ -31,17 +32,20 @@ public class Booking {
 
     public Booking() {}
 
-    public Booking(Long bookingId, String bookingDate, String status, User user, TravelPackage travelPackage, Payment payment, String specialRequests, String userEmail, String numberOfTravelers) {
+    public Booking(Long bookingId, String bookingDate, String status, int numberOfTravelers, String userEmail,
+                   String specialRequests, User user, TravelPackage travelPackage, Payment payment) {
         this.bookingId = bookingId;
         this.bookingDate = bookingDate;
         this.status = status;
+        this.numberOfTravelers = numberOfTravelers;
+        this.userEmail = userEmail;
+        this.specialRequests = specialRequests;
         this.user = user;
         this.travelPackage = travelPackage;
         this.payment = payment;
-        this.userEmail = user.getEmail();
-        this.numberOfTravelers = getNumberOfTravelers();
-        this.specialRequests = getSpecialRequests();
     }
+
+    // Getters and Setters
 
     public Long getBookingId() {
         return bookingId;
@@ -67,30 +71,6 @@ public class Booking {
         this.status = status;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public TravelPackage getTravelPackage() {
-        return travelPackage;
-    }
-
-    public void setTravelPackage(TravelPackage travelPackage) {
-        this.travelPackage = travelPackage;
-    }
-
-    public Payment getPayment() {
-        return payment;
-    }
-
-    public void setPayment(Payment payment) {
-        this.payment = payment;
-    }
-
     public String getUserEmail() {
         return userEmail;
     }
@@ -113,6 +93,30 @@ public class Booking {
 
     public void setSpecialRequests(String specialRequests) {
         this.specialRequests = specialRequests;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public TravelPackage getTravelPackage() {
+        return travelPackage;
+    }
+
+    public void setTravelPackage(TravelPackage travelPackage) {
+        this.travelPackage = travelPackage;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     @Override
