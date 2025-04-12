@@ -4,6 +4,7 @@ import lk.ijse.travel_booking_system.dto.GuideDTO;
 import lk.ijse.travel_booking_system.entity.Guide;
 import lk.ijse.travel_booking_system.Exception.NotFoundException;
 import lk.ijse.travel_booking_system.repo.GuideRepository;
+import lk.ijse.travel_booking_system.service.EmailService;
 import lk.ijse.travel_booking_system.service.GuideService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,13 @@ public class GuideServiceImpl implements GuideService {
 
     private final GuideRepository guideRepository;
     private final ModelMapper modelMapper;
+    private final EmailService emailService;
 
     @Autowired
-    public GuideServiceImpl(GuideRepository guideRepository, ModelMapper modelMapper) {
+    public GuideServiceImpl(GuideRepository guideRepository, ModelMapper modelMapper, EmailService emailService) {
         this.guideRepository = guideRepository;
         this.modelMapper = modelMapper;
+        this.emailService = emailService;
     }
 
     @Override
@@ -39,6 +42,14 @@ public class GuideServiceImpl implements GuideService {
 
         // Save to database
         Guide savedGuide = guideRepository.save(guide);
+
+        try {
+            emailService.sendWelcomeEmail(savedGuide.getEmail(), savedGuide.getName());
+        } catch (Exception e) {
+            // Log the error but don't fail the operation
+            System.err.println("Failed to send welcome email: " + e.getMessage());
+        }
+
 
         // Convert back to DTO and return
         return modelMapper.map(savedGuide, GuideDTO.class);

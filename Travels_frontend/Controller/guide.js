@@ -41,7 +41,10 @@ $(document).ready(function() {
                 contentType: 'application/json',
                 data: JSON.stringify(guideData),
                 success: function(response) {
-                    showSuccessToast(isUpdate ? 'Guide updated successfully!' : 'Guide added successfully!');
+                    showSuccessToast(
+                        'Guide added successfully! ' +
+                        'A welcome email has been sent to ' + guideData.email
+                    );
                     resetForm();
                     loadGuides();
                 },
