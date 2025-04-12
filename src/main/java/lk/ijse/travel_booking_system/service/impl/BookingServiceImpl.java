@@ -73,7 +73,7 @@ public class BookingServiceImpl implements BookingService {
         booking.setUser(user);
         booking.setTravelPackage(travelPackage);
 
-        booking = bookingRepository.save(booking);
+         bookingRepository.save(booking);
 
         return convertToDTO(booking);
     }

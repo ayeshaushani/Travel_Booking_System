@@ -23,7 +23,8 @@ public class BookingController {
 
     @PostMapping
     public ResponseEntity<BookingDTO> saveBooking(@RequestBody BookingDTO bookingDTO) {
-        System.out.println(bookingDTO);
+        int a =1;
+        bookingDTO.setUserId(Long.valueOf(a));
         return ResponseEntity.ok(bookingService.saveBooking(bookingDTO));
     }
 
