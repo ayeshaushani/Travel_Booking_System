@@ -1,5 +1,7 @@
 package lk.ijse.travel_booking_system.service.impl;
 
+import jakarta.transaction.Transactional;
+import lk.ijse.travel_booking_system.dto.PayHereWebhookRequest;
 import lk.ijse.travel_booking_system.dto.PaymentDTO;
 import lk.ijse.travel_booking_system.entity.Booking;
 import lk.ijse.travel_booking_system.entity.Payment;
@@ -9,9 +11,9 @@ import lk.ijse.travel_booking_system.service.PaymentService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class PaymentServiceImpl implements PaymentService {
 
     private final PaymentRepository paymentRepository;
@@ -27,28 +29,31 @@ public class PaymentServiceImpl implements PaymentService {
         Booking booking = bookingRepository.findById(paymentDTO.getBookingId())
                 .orElseThrow(() -> new RuntimeException("Booking not found"));
 
-        Payment payment = new Payment(
-                null, // Auto-generated ID
-                paymentDTO.getAmount(),
-                paymentDTO.getPaymentMethod(),
-                paymentDTO.getStatus(),
-                booking
-        );
+        Payment payment = new Payment();
 
+                payment.setAmount(paymentDTO.getAmount());
+                payment.setPaymentMethod(paymentDTO.getPaymentMethod());
+                payment.setStatus(paymentDTO.getStatus());
+                payment.setBooking(booking);
+
+                Payment pid  = payment;
+                booking.setPayment(pid);
         Payment savedPayment = paymentRepository.save(payment);
-        return mapToDTO(savedPayment);
+        return paymentDTO;
     }
 
     @Override
-    public List<PaymentDTO> getAllPayments() {
-        return paymentRepository.findAll().stream().map(this::mapToDTO).collect(Collectors.toList());
+    public List<Payment> getAllPayments() {
+        return paymentRepository.findAll();
     }
 
     @Override
     public PaymentDTO getPaymentById(Long id) {
         Payment payment = paymentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Payment not found"));
-        return mapToDTO(payment);
+
+        PaymentDTO paymentDTO = new PaymentDTO();
+        return  paymentDTO;
     }
 
     @Override
@@ -65,7 +70,7 @@ public class PaymentServiceImpl implements PaymentService {
         payment.setBooking(booking);
 
         Payment updatedPayment = paymentRepository.save(payment);
-        return mapToDTO(updatedPayment);
+        return paymentDTO;
     }
 
     @Override
@@ -73,13 +78,14 @@ public class PaymentServiceImpl implements PaymentService {
         paymentRepository.deleteById(id);
     }
 
-    private PaymentDTO mapToDTO(Payment payment) {
-        return new PaymentDTO(
-                payment.getPaymentId(),
-                payment.getAmount(),
-                payment.getPaymentMethod(),
-                payment.getStatus(),
-                payment.getBooking().getBookingId()
-        );
-    }
+
+//    private PaymentDTO mapToDTO(Payment payment) {
+//        return new PaymentDTO(
+//                payment.getPaymentId(),
+//                payment.getAmount(),
+//                payment.getPaymentMethod(),
+//                payment.getStatus(),
+//                payment.getBooking().getBookingId()
+//        );
+//    }
 }

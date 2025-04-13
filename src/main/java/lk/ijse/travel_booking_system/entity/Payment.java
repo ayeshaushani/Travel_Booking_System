@@ -11,18 +11,20 @@ public class Payment {
     private String paymentMethod;
     private String status; // Paid, Pending, Refunded
 
+
     @OneToOne
     @JoinColumn(name = "bookingId")
     private Booking booking;
 
     public Payment() {}
 
-    public Payment(Long paymentId, double amount, String paymentMethod, String status, Booking booking) {
+    public Payment(Long paymentId, double amount, String paymentMethod, String status, Booking booking, String gatewayReference, String signature, String currency) {
         this.paymentId = paymentId;
         this.amount = amount;
         this.paymentMethod = paymentMethod;
         this.status = status;
         this.booking = booking;
+
     }
 
     public Long getPaymentId() {
@@ -64,6 +66,7 @@ public class Payment {
     public void setBooking(Booking booking) {
         this.booking = booking;
     }
+
 
     @Override
     public String toString() {
