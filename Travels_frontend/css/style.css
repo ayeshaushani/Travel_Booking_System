@@ -291,11 +291,18 @@
     background-repeat: no-repeat;
     background-size: cover;
 }
-.booking a button{
+.booking a{
     font-family: 'Nunito', sans-serif;
-    font-weight: 600;
+    background-color: transparent;
+    border: 2px solid white;
+    border-radius: 4px;
+    color: white ;
+    text-decoration: none;
+    font-weight: 800;
     transition: .5s;
-
+}
+.booking a:hover{
+    background-color: #0dcaf0;
 }
 
 

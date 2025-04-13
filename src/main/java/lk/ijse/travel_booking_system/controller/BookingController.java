@@ -52,4 +52,5 @@ public class BookingController {
     public ResponseEntity<List<TravelPackageDTO>> getTravelPackages() {
         return ResponseEntity.ok(travelPackageService.getAllTravelPackages());
     }
+
 }
