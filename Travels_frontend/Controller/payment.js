@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const response = await fetch('http://localhost:8080/payments', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('jwtToken') // ✅ Add JWT token
                 },
                 body: JSON.stringify(paymentData)
             });

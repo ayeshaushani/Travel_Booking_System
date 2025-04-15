@@ -75,8 +75,8 @@ $('#signInForm').on('submit', function (event) {
                 case 'ADMIN':
                     window.location.href = '../admin/AdminDashboard.html';
                     break;
-                case 'GUIDE':
-                    window.location.href = '../guide/guideManagment.html';
+                case 'USER':
+                    window.location.href = '../index.html';
                     break;
                 default:
                     window.location.href = '../index.html';

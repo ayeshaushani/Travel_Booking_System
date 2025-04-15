@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Booking System - Payment</title>
+   <!-- <link rel="stylesheet" href="styles.css">-->
+</head>
+<style>
+    /* General Styles */
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: 'Arial', sans-serif;
+    }
+
+    body {
+        background-color: #f5f5f5;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    header {
+        background-color: #2c3e50;
+        color: white;
+        padding: 20px 0;
+        margin-bottom: 30px;
+    }
+
+    header h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    nav ul {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+    }
+
+    nav ul li {
+        margin: 0 15px;
+    }
+
+    nav ul li a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    nav ul li a:hover {
+        text-decoration: underline;
+    }
+
+    footer {
+        text-align: center;
+        padding: 20px 0;
+        margin-top: 30px;
+        background-color: #2c3e50;
+        color: white;
+    }
+
+    /* Payment Form Styles */
+    .payment-container {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .payment-container h2 {
+        margin-bottom: 20px;
+        color: #2c3e50;
+        text-align: center;
+    }
+
+    .booking-summary {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 6px;
+        margin-bottom: 30px;
+    }
+
+    .booking-summary h3 {
+        margin-bottom: 15px;
+        color: #2c3e50;
+    }
+
+    .payment-methods {
+        margin-bottom: 30px;
+    }
+
+    .method-options {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin: 20px 0;
+    }
+
+    .method-options label {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .method-options input[type="radio"] {
+        margin-right: 10px;
+    }
+
+    .credit-card-form {
+        margin: 25px 0;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    .form-row {
+        display: flex;
+        gap: 20px;
+    }
+
+    .form-row .form-group {
+        flex: 1;
+    }
+
+    .pay-now-btn {
+        background-color: #27ae60;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        width: 100%;
+        transition: background-color 0.3s;
+    }
+
+    .pay-now-btn:hover {
+        background-color: #2ecc71;
+    }
+
+    /* Payment History Styles */
+    .payment-history {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .payment-history h2 {
+        margin-bottom: 20px;
+        color: #2c3e50;
+        text-align: center;
+    }
+
+    .payment-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .payment-table th, .payment-table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .payment-table th {
+        background-color: #f8f9fa;
+        font-weight: bold;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    .status-paid {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    .status-pending {
+        background-color: #fff3cd;
+        color: #856404;
+    }
+
+    .view-btn {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .view-btn:hover {
+        background-color: #2980b9;
+    }
+
+    /* Modal Styles */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+        background-color: white;
+        margin: 10% auto;
+        padding: 30px;
+        border-radius: 8px;
+        width: 80%;
+        max-width: 600px;
+        position: relative;
+    }
+
+    .close-modal {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .confirmation-details {
+        margin: 20px 0;
+    }
+
+    .confirmation-details p {
+        margin-bottom: 10px;
+    }
+
+    .confirmation-actions {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 25px;
+    }
+
+    .confirmation-actions button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .view-booking-btn {
+        background-color: #3498db;
+        color: white;
+    }
+
+    .return-home-btn {
+        background-color: #95a5a6;
+        color: white;
+    }
+
+    /* Loading State */
+    .loading {
+        text-align: center;
+        padding: 50px;
+        font-size: 18px;
+    }
+
+    .error {
+        color: #e74c3c;
+        text-align: center;
+        padding: 50px;
+        font-size: 18px;
+    }
+</style>
+
+<body>
+<div class="container">
+    <header>
+        <h1>Travel Booking System</h1>
+        <nav>
+            <ul>
+                <li><a href="#" id="homeLink">Home</a></li>
+                <li><a href="#" id="bookingsLink">My Bookings</a></li>
+                <li><a href="#" id="paymentsLink">Payment History</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="mainContent">
+        <!-- Payment Form will be loaded here dynamically -->
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Travel Booking System</p>
+    </footer>
+</div>
+
+<!-- Payment Confirmation Modal -->
+<div id="confirmationModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div id="confirmationContent"></div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const bookingId = urlParams.get('bookingId');
+
+        // Load appropriate content based on URL
+        if (window.location.pathname.includes('payment.html')) {
+            if (bookingId) {
+                loadPaymentForm(bookingId);
+            } else {
+                loadPaymentHistory();
+            }
+        }
+
+        // Navigation event listeners
+        document.getElementById('homeLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = 'index.html';
+        });
+
+        document.getElementById('bookingsLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = 'bookings.html';
+        });
+
+        document.getElementById('paymentsLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = 'payment.html';
+        });
+
+        // Close modal when clicking X
+        document.querySelector('.close-modal').addEventListener('click', function() {
+            document.getElementById('confirmationModal').style.display = 'none';
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('confirmationModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    });
+
+    function loadPaymentForm(bookingId) {
+        const mainContent = document.getElementById('mainContent');
+        mainContent.innerHTML = '<div class="loading">Loading booking details...</div>';
+
+        // Fetch booking details
+        fetch(`http://localhost:8080/bookings/${bookingId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to load booking details');
+                }
+                return response.json();
+            })
+            .then(booking => {
+                renderPaymentForm(booking);
+            })
+            .catch(error => {
+                mainContent.innerHTML = `<div class="error">${error.message}</div>`;
+            });
+    }
+
+    function renderPaymentForm(booking) {
+        const mainContent = document.getElementById('mainContent');
+
+        mainContent.innerHTML = `
+        <div class="payment-container">
+            <h2>Complete Your Payment</h2>
+            <div class="payment-content">
+                <div class="booking-summary">
+                    <h3>Booking Summary</h3>
+                    <p><strong>Package:</strong> ${booking.travelPackage.name}</p>
+                    <p><strong>Destination:</strong> ${booking.travelPackage.destination}</p>
+                    <p><strong>Total Amount:</strong> $${booking.totalPrice.toFixed(2)}</p>
+                </div>
+
+                <form id="paymentForm">
+                    <div class="payment-methods">
+                        <h3>Select Payment Method</h3>
+                        <div class="method-options">
+                            <label>
+                                <input type="radio" name="paymentMethod" value="credit_card" checked>
+                                Credit Card
+                            </label>
+                            <label>
+                                <input type="radio" name="paymentMethod" value="paypal">
+                                PayPal
+                            </label>
+                            <label>
+                                <input type="radio" name="paymentMethod" value="bank_transfer">
+                                Bank Transfer
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="creditCardForm" class="credit-card-form">
+                        <div class="form-group">
+                            <label for="cardNumber">Card Number</label>
+                            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="expiryDate">Expiry Date</label>
+                                <input type="text" id="expiryDate" placeholder="MM/YY" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cvv">CVV</label>
+                                <input type="text" id="cvv" placeholder="123" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cardName">Cardholder Name</label>
+                            <input type="text" id="cardName" placeholder="John Doe" required>
+                        </div>
+                    </div>
+
+                    <div class="payment-actions">
+                        <button type="submit" class="pay-now-btn">
+                            Pay $${booking.totalPrice.toFixed(2)}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    `;
+
+        // Handle payment method change
+        document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const creditCardForm = document.getElementById('creditCardForm');
+                if (this.value === 'credit_card') {
+                    creditCardForm.style.display = 'block';
+                } else {
+                    creditCardForm.style.display = 'none';
+                }
+            });
+        });
+
+        // Handle form submission
+        document.getElementById('paymentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            processPayment(booking);
+        });
+    }
+
+    function processPayment(booking) {
+        const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+        const payButton = document.querySelector('.pay-now-btn');
+        payButton.disabled = true;
+        payButton.textContent = 'Processing...';
+
+        const paymentData = {
+            amount: booking.totalPrice,
+            paymentMethod: paymentMethod,
+            status: 'pending',
+            bookingId: booking.bookingId
+        };
+
+        fetch('http://localhost:8080/payments', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('jwtToken') // ✅ Add JWT token
+            },
+            body: JSON.stringify(paymentData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Payment failed');
+                }
+                return response.json();
+            })
+            .then(payment => {
+                showConfirmation(payment);
+            })
+            .catch(error => {
+                alert(error.message);
+                payButton.disabled = false;
+                payButton.textContent = `Pay $${booking.totalPrice.toFixed(2)}`;
+            });
+    }
+
+    function showConfirmation(payment) {
+        const modal = document.getElementById('confirmationModal');
+        const confirmationContent = document.getElementById('confirmationContent');
+
+        confirmationContent.innerHTML = `
+        <div class="status-badge ${payment.status === 'paid' ? 'status-paid' : 'status-pending'}">
+            ${payment.status.toUpperCase()}
+        </div>
+        <h2>Payment Confirmation</h2>
+        <div class="confirmation-details">
+            <p><strong>Payment ID:</strong> ${payment.paymentId}</p>
+            <p><strong>Amount:</strong> $${payment.amount.toFixed(2)}</p>
+            <p><strong>Payment Method:</strong> ${payment.paymentMethod}</p>
+            <p><strong>Booking Reference:</strong> ${payment.bookingId}</p>
+            <p><strong>Date:</strong> ${new Date().toLocaleString()}</p>
+        </div>
+        <div class="confirmation-actions">
+            <button class="view-booking-btn" onclick="window.location.href='bookings.html?bookingId=${payment.bookingId}'">
+                View Booking Details
+            </button>
+            <button class="return-home-btn" onclick="window.location.href='index.html'">
+                Return to Home
+            </button>
+        </div>
+    `;
+
+        modal.style.display = 'block';
+    }
+
+    function loadPaymentHistory() {
+        const mainContent = document.getElementById('mainContent');
+        mainContent.innerHTML = '<div class="loading">Loading payment history...</div>';
+
+        fetch('http://localhost:8080/payments')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to load payment history');
+                }
+                return response.json();
+            })
+            .then(payments => {
+                renderPaymentHistory(payments);
+            })
+            .catch(error => {
+                mainContent.innerHTML = `<div class="error">${error.message}</div>`;
+            });
+    }
+
+    function renderPaymentHistory(payments) {
+        const mainContent = document.getElementById('mainContent');
+
+        if (payments.length === 0) {
+            mainContent.innerHTML = '<div class="payment-history"><h2>Payment History</h2><p>No payments found.</p></div>';
+            return;
+        }
+
+        let tableRows = '';
+        payments.forEach(payment => {
+            tableRows += `
+            <tr>
+                <td>${payment.paymentId}</td>
+                <td>$${payment.amount.toFixed(2)}</td>
+                <td>${payment.paymentMethod}</td>
+                <td>
+                    <span class="status-badge ${payment.status === 'paid' ? 'status-paid' : 'status-pending'}">
+                        ${payment.status}
+                    </span>
+                </td>
+                <td>${payment.bookingId}</td>
+                <td>${new Date(payment.createdAt).toLocaleDateString()}</td>
+                <td>
+                    <button class="view-btn" onclick="viewPaymentDetails(${payment.paymentId})">
+                        View Details
+                    </button>
+                </td>
+            </tr>
+        `;
+        });
+
+        mainContent.innerHTML = `
+        <div class="payment-history">
+            <h2>Payment History</h2>
+            <div class="payment-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Payment ID</th>
+                            <th>Amount</th>
+                            <th>Method</th>
+                            <th>Status</th>
+                            <th>Booking ID</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${tableRows}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    `;
+    }
+
+    // Make this function available globally
+    window.viewPaymentDetails = function(paymentId) {
+        fetch(`http://localhost:8080/payments/${paymentId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to load payment details');
+                }
+                return response.json();
+            })
+            .then(payment => {
+                showConfirmation(payment);
+            })
+            .catch(error => {
+                alert(error.message);
+            });
+    };
+</script>
+</body>
+</html>

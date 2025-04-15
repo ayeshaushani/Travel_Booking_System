@@ -297,6 +297,12 @@
 
                     // ✅ Load user's booking list in confirmation step
                     loadUserBookings();
+                    // From your booking confirmation page
+                    localStorage.setItem('currentBookingId', bookingId);
+                    window.location.href = 'payment.html';
+
+// OR pass in URL
+                    window.location.href = `payment.html?bookingId=${bookingId}`;
                 },
                 error: function (xhr, status, error) {
                     alert('Error submitting booking: ' + (xhr.responseJSON?.message || error));
@@ -349,144 +355,6 @@
         loadPackages();
     });
 </script>
-
-<!--<script>
-    $(document).ready(function () {
-        const apiBaseUrl = 'http://localhost:8080';
-        const token = localStorage.getItem('jwtToken');
-        const userId = localStorage.getItem('userId');
-        let selectedPackage = null;
-
-        // Initialize steps
-        function showStep(stepId) {
-            $('.step').removeClass('active');
-            $(`#${stepId}`).addClass('active');
-        }
-
-        // Load packages
-        function loadPackages() {
-            $.ajax({
-                url: `${apiBaseUrl}/bookings/packages`,
-                method: 'GET',
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('jwtToken')
-                },
-                success: function (packages) {
-                    const packageContainer = $('#packageContainer');
-                    packageContainer.empty();
-
-                    if (packages.length === 0) {
-                        packageContainer.html('<div class="col-12 text-center py-4"><p>No packages available at the moment.</p></div>');
-                        return;
-                    }
-
-                    packages.forEach(pkg => {
-                        const packageCard = $(`
-                            <div class="col-md-6 mb-4">
-                                <div class="card package-card h-100" data-package-id="${pkg.tPackageId}">
-                                    <div class="card-body">
-                                        <h5 class="card-title">${pkg.name}</h5>
-                                        <p class="card-text">${pkg.description || 'Explore this amazing destination'}</p>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span class="h5 text-primary">Rs. ${pkg.price.toFixed(2)}</span>
-                                            <button class="btn btn-sm btn-outline-primary select-package">Select</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        `);
-                        packageContainer.append(packageCard);
-                    });
-
-                    // Add click event to package cards
-                    $('.package-card').on('click', function () {
-                        $('.package-card').removeClass('selected-package');
-                        $(this).addClass('selected-package');
-                        selectedPackage = packages.find(p => p.tPackageId == $(this).data('package-id'));
-                        $('#nextBtn1').prop('disabled', false);
-                    });
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error loading packages:', error);
-                    $('#packageContainer').html(`
-                        <div class="col-12 text-center py-4">
-                            <p class="text-danger">Error loading packages. Please try again later.</p>
-                            <button class="btn btn-secondary" onclick="loadPackages()">Retry</button>
-                        </div>
-                    `);
-                }
-            });
-        }
-
-        // Initialize date picker
-        function initDatePicker() {
-            const today = new Date().toISOString().split('T')[0];
-            $('#travelDate').attr('min', today);
-        }
-
-        // Step navigation
-        $('#nextBtn1').on('click', function () {
-            if (!selectedPackage) return;
-            $('#selectedPackageId').val(selectedPackage.tPackageId);
-            initDatePicker();
-            showStep('step2');
-        });
-
-        $('#backBtn2').on('click', function () {
-            showStep('step1');
-        });
-
-        // Form submission
-        $('#bookingForm').on('submit', function (e) {
-            e.preventDefault();
-            $('#submitBtn').prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...');
-
-            const bookingData = {
-                bookingDate: $('#travelDate').val(),
-                status: "PENDING",
-                userId: parseInt(userId),
-                tPackageId: parseInt(selectedPackage.tPackageId),
-                specialRequests: $('#specialRequests').val(),
-                travelers: parseInt($('#travelers').val())
-            };
-
-            $.ajax({
-                url: `${apiBaseUrl}/bookings`,
-                method: 'POST',
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('jwtToken')
-                },
-                data: JSON.stringify(bookingData),
-                contentType: "application/json",
-                success: function (booking) {
-                    // Show confirmation
-                    showStep('step3');
-
-                    // Display booking details
-                    $('#bookingId').text(booking.bookingId);
-                    $('#bookingDetails').html(`
-                        <strong>Package:</strong> ${selectedPackage.name}<br>
-                        <strong>Date:</strong> ${new Date(booking.bookingDate).toLocaleDateString()}<br>
-                        <strong>Travelers:</strong> ${bookingData.travelers}<br>
-                        <strong>Status</strong>:</strong> ${bookingData.status}<br>
-                        ${bookingData.specialRequests ? `<strong>Special Requests:</strong> ${bookingData.specialRequests}` : ''}
-
-
-
-                    `);console.log("userId:", userId); // should be like "1" or "12"
-                },
-                error: function (xhr, status, error) {
-                    alert('Error submitting booking: ' + (xhr.responseJSON?.message || error));
-                    console.error('Booking error:', error);
-                    $('#submitBtn').prop('disabled', false).html('Submit Booking <i class="fas fa-check ms-1"></i>');
-                }
-            });
-        });
-
-        // Initial load
-        loadPackages();
-    });
-</script>-->
 </body>
 
 </html>

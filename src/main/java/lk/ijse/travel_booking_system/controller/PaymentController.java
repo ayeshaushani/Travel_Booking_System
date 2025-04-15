@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/payments")
-@CrossOrigin(origins = "http://localhost:63342", allowCredentials = "true")
+@CrossOrigin(origins = "*")
 public class PaymentController {
 
     private final PaymentService paymentService;
@@ -31,6 +31,7 @@ public class PaymentController {
 
     @GetMapping
     public ResponseEntity<List<Payment>> getAllPayments() {
+
         return ResponseEntity.ok(paymentService.getAllPayments());
     }
 
