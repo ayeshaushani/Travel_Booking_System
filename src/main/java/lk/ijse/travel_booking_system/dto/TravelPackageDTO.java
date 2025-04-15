@@ -10,6 +10,7 @@ public class TravelPackageDTO {
     private String image;
     private String guide;
 
+
     public TravelPackageDTO() {
     }
 
@@ -22,6 +23,7 @@ public class TravelPackageDTO {
         this.price = price;
         this.description = description;
         this.guide = guide;
+
     }
 
     public Long gettPackageId() {

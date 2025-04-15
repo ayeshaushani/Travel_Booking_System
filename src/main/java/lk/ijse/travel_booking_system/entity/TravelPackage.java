@@ -18,6 +18,7 @@ public class TravelPackage {
     private String image;
     private String guide;
 
+
     @OneToMany(mappedBy = "travelPackage", cascade = CascadeType.ALL)
     private List<Booking> bookings;
 
@@ -26,7 +27,7 @@ public class TravelPackage {
 
     public TravelPackage() {
     }
-    public TravelPackage(Long tPackageId, String name, String destination, String duration, double price, String description, String image, List<Booking> bookings, List<Review> reviews) {
+    public TravelPackage(Long tPackageId, String name, String destination, String duration, double price, String description, String image, List<Booking> bookings, List<Review> reviews, String guide, String guideName) {
         this.tPackageId = tPackageId;
         this.name = name;
         this.destination = destination;
@@ -115,9 +116,6 @@ public class TravelPackage {
         return reviews;
     }
 
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
-    }
 
 
     @Override
@@ -134,4 +132,5 @@ public class TravelPackage {
                 ", reviews=" + reviews +
                 '}';
     }
+
 }

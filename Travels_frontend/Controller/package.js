@@ -125,10 +125,32 @@ function loadPackages() {
         }
     });
 }
+function loadGuides() {
+    fetch("http://localhost:8080/guides", {
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('jwtToken')
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            const guideDropdown = document.getElementById("guide");
+            guideDropdown.innerHTML = `<option value="">-- Select Guide --</option>`;
+            data.forEach(guide => {
+                const option = document.createElement("option");
+                option.value = guide.guideId;
+                option.text = `${guide.name} (${guide.experience} yrs)`;
+                guideDropdown.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error("Error loading guides:", error);
+        });
+}
 
 // Load packages when the page is ready
 $(document).ready(function() {
     loadPackages();
+    loadGuides();
 });
 
 
