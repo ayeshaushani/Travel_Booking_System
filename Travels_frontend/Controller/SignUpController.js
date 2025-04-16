@@ -99,7 +99,9 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
                 if (role === "ADMIN") {
                     window.location.href = "../admin/AdminDashBoard.html";
-                } else {
+                } else if (role==="AGENT") {
+                    window.location.href = "../guide/guideDashBoard.html";
+                }else {
                     window.location.href = "../index.html";
                 }
             }, 1500);
@@ -137,4 +139,5 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => toast.remove(), 300);
         }, 3000);
     }
+
 });

@@ -3,150 +3,525 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travel Booking</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <title>Travel Booking System - Payment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #4a6bff;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --light-gray: #f8f9fa;
+            --dark-gray: #343a40;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f9;
-            padding-top: 50px;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
         }
 
-        .container {
-            max-width: 600px;
-            background-color: #ffffff;
-            padding: 40px;
+        .payment-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
 
-        h2 {
+        .payment-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1.5rem;
             text-align: center;
-            color: #5A5A5A;
+        }
+
+        .payment-header h2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .payment-body {
+            padding: 2rem;
+        }
+
+        .booking-summary {
+            background-color: var(--light-gray);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+        }
+
+        .summary-row.total {
+            font-weight: bold;
+            border-top: 1px solid #ddd;
+            padding-top: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .payment-methods {
+            margin-bottom: 2rem;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-method:hover {
+            border-color: var(--primary-color);
+        }
+
+        .payment-method.active {
+            border-color: var(--primary-color);
+            background-color: rgba(74, 107, 255, 0.05);
+        }
+
+        .payment-method input {
+            margin-right: 1rem;
+        }
+
+        .payment-method i {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: var(--primary-color);
+        }
+
+        .card-details {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .card-details.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
         }
 
         .form-group label {
-            font-weight: bold;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
         }
 
-        .btn-primary {
-            background-color: #4CAF50;
-            border-color: #4CAF50;
+        .form-group input {
             width: 100%;
-            padding: 12px;
-            font-size: 16px;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
         }
 
-        .btn-primary:hover {
-            background-color: #45a049;
-            border-color: #45a049;
+        .form-row {
+            display: flex;
+            gap: 1rem;
         }
 
-        .form-control {
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        .form-row .form-group {
+            flex: 1;
         }
 
-        .form-control:focus {
-            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+        .pay-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .form-group textarea {
-            resize: vertical;
+        .pay-button:hover {
+            background-color: #3a5bef;
         }
 
-        /* Custom select styling */
-        select.form-control {
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            background: url('https://upload.wikimedia.org/wikipedia/commons/1/1f/Arrow_down_2.svg') no-repeat right;
-            background-size: 18px;
+        .pay-button i {
+            margin-right: 0.5rem;
         }
 
-        .alert {
-            margin-top: 20px;
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .payment-status {
+            text-align: center;
+            padding: 2rem;
+            display: none;
+        }
+
+        .payment-status.success i {
+            color: var(--success-color);
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .payment-status.error i {
+            color: var(--danger-color);
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .payment-status h3 {
+            margin-bottom: 1rem;
+        }
+
+        .payment-status p {
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+
+        .status-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .status-button:hover {
+            background-color: #3a5bef;
+        }
+
+        @media (max-width: 768px) {
+            .payment-container {
+                margin: 1rem;
+                border-radius: 0;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h2>Travel Package Booking</h2>
-    <form id="bookingForm">
-        <div class="form-group">
-            <label for="userEmail">Email:</label>
-            <input type="email" class="form-control" id="userEmail" placeholder="Enter your email" required>
+<div class="payment-container">
+    <div class="payment-header">
+        <h2>Complete Your Payment</h2>
+        <p>Secure payment processing</p>
+    </div>
+
+    <div class="payment-body">
+        <div class="booking-summary">
+            <h3>Booking Summary</h3>
+            <div class="summary-row">
+                <span>Booking ID:</span>
+                <span id="booking-id">-</span>
+            </div>
+            <div class="summary-row">
+                <span>Package:</span>
+                <span id="package-name">-</span>
+            </div>
+            <div class="summary-row">
+                <span>Amount:</span>
+                <span id="booking-amount">$0.00</span>
+            </div>
+            <div class="summary-row total">
+                <span>Total to Pay:</span>
+                <span id="total-amount">$0.00</span>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="travelPackage">Travel Package:</label>
-            <select class="form-control" id="travelPackage" required>
-                <option value="">Select Package</option>
-                <!-- Options will be dynamically filled by AJAX -->
-            </select>
+
+        <div class="payment-methods">
+            <h3>Select Payment Method</h3>
+
+            <div class="payment-method" data-method="credit">
+                <input type="radio" name="paymentMethod" id="credit-card" value="credit">
+                <i class="far fa-credit-card"></i>
+                <label for="credit-card">Credit Card</label>
+            </div>
+
+            <div class="payment-method" data-method="debit">
+                <input type="radio" name="paymentMethod" id="debit-card" value="debit">
+                <i class="fas fa-credit-card"></i>
+                <label for="debit-card">Debit Card</label>
+            </div>
+
+            <div class="payment-method" data-method="paypal">
+                <input type="radio" name="paymentMethod" id="paypal" value="paypal">
+                <i class="fab fa-paypal"></i>
+                <label for="paypal">PayPal</label>
+            </div>
+
+            <div class="payment-method" data-method="bank">
+                <input type="radio" name="paymentMethod" id="bank-transfer" value="bank">
+                <i class="fas fa-university"></i>
+                <label for="bank-transfer">Bank Transfer</label>
+            </div>
+
+            <div class="card-details" id="card-details">
+                <div class="form-group">
+                    <label for="card-number">Card Number</label>
+                    <input type="text" id="card-number" placeholder="1234 5678 9012 3456">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="expiry-date">Expiry Date</label>
+                        <input type="text" id="expiry-date" placeholder="MM/YY">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" placeholder="123">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="card-name">Cardholder Name</label>
+                    <input type="text" id="card-name" placeholder="John Doe">
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="numTravelers">Number of Travelers:</label>
-            <input type="number" class="form-control" id="numTravelers" placeholder="Enter number of travelers" required>
-        </div>
-        <div class="form-group">
-            <label for="specialRequests">Special Requests:</label>
-            <textarea class="form-control" id="specialRequests" rows="3"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit Booking</button>
-    </form>
-    <div id="alertBox" class="alert alert-success" style="display:none;" role="alert"></div>
+
+        <button class="pay-button" id="pay-button">
+            <i class="fas fa-lock"></i> Pay Now
+            <div class="spinner" id="spinner" style="display: none;"></div>
+        </button>
+    </div>
+
+    <div class="payment-status success" id="success-status">
+        <i class="fas fa-check-circle"></i>
+        <h3>Payment Successful!</h3>
+        <p>Your payment has been processed successfully.</p>
+        <p>Transaction ID: <span id="transaction-id"></span></p>
+        <button class="status-button" id="view-booking">View Booking Details</button>
+    </div>
+
+    <div class="payment-status error" id="error-status">
+        <i class="fas fa-times-circle"></i>
+        <h3>Payment Failed</h3>
+        <p id="error-message">There was an error processing your payment.</p>
+        <button class="status-button" id="try-again">Try Again</button>
+    </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script>
-    // Populate the travel package options using AJAX
-    $(document).ready(function() {
-        $.ajax({
-            url: 'http://localhost:8080/bookings/packages',
-            type: 'GET',
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('jwtToken')
-            },
-            success: function(data) {
-                data.forEach(function(package) {
-                    $('#travelPackage').append(new Option(package.tPackageId,package.name));
-                });
-            },
-            error: function(error) {
-                console.log("Error loading packages: ", error);
-            }
-        });
+    document.addEventListener('DOMContentLoaded', function() {
+        // DOM Elements
+        const paymentMethods = document.querySelectorAll('.payment-method');
+        const cardDetails = document.getElementById('card-details');
+        const payButton = document.getElementById('pay-button');
+        const spinner = document.getElementById('spinner');
+        const successStatus = document.getElementById('success-status');
+        const errorStatus = document.getElementById('error-status');
+        const tryAgainBtn = document.getElementById('try-again');
+        const viewBookingBtn = document.getElementById('view-booking');
 
-        // Handle form submission
-        $('#bookingForm').submit(function(event) {
-            event.preventDefault();
-            const bookingData = {
-                userEmail: $('#userEmail').val(),
-                tPackageId: $('#travelPackage').val(),
-                numberOfTravelers: $('#numTravelers').val(),
-                specialRequests: $('#specialRequests').val(),
-                status: "PENDING"  // Default status
-            };
+        // Booking details elements
+        const bookingIdEl = document.getElementById('booking-id');
+        const packageNameEl = document.getElementById('package-name');
+        const bookingAmountEl = document.getElementById('booking-amount');
+        const totalAmountEl = document.getElementById('total-amount');
 
-            // Send the booking request to backend
-            $.ajax({
-                url: 'http://localhost:8080/bookings',
-                type: 'POST',
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('jwtToken')
-                },
-                contentType: 'application/json',
-                data: JSON.stringify(bookingData),
-                success: function(response) {
-                    $('#alertBox').text('Booking created successfully!').show();
-                    $('#bookingForm')[0].reset();
-                },
-                error: function(error) {
-                    $('#alertBox').text('Error creating booking: ' + error.responseText).show();
+        // Get booking ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const bookingId = urlParams.get('bookingId');
+
+        // Initialize payment page
+        initPaymentPage();
+
+        // Payment method selection
+        paymentMethods.forEach(method => {
+            method.addEventListener('click', function() {
+                // Update active state
+                paymentMethods.forEach(m => m.classList.remove('active'));
+                this.classList.add('active');
+
+                // Show/hide card details
+                const methodType = this.getAttribute('data-method');
+                if (methodType === 'credit' || methodType === 'debit') {
+                    cardDetails.classList.add('active');
+                } else {
+                    cardDetails.classList.remove('active');
                 }
             });
         });
+
+        // Pay button click handler
+        payButton.addEventListener('click', function() {
+            processPayment();
+        });
+
+        // Try again button
+        tryAgainBtn.addEventListener('click', function() {
+            errorStatus.style.display = 'none';
+        });
+
+        // View booking button
+        viewBookingBtn.addEventListener('click', function() {
+            window.location.href = `booking-details.html?bookingId=${bookingId}`;
+        });
+
+        // Initialize payment page with booking details
+        async function initPaymentPage() {
+            if (!bookingId) {
+                showError('No booking ID provided');
+                return;
+            }
+
+            bookingIdEl.textContent = bookingId;
+
+            try {
+                // Fetch booking details from backend
+                const booking = await fetchBookingDetails(bookingId);
+
+                // Update UI with booking details
+                packageNameEl.textContent = booking.packageName || 'Travel Package';
+                bookingAmountEl.textContent = `$${booking.amount.toFixed(2)}`;
+                totalAmountEl.textContent = `$${booking.amount.toFixed(2)}`;
+
+            } catch (error) {
+                console.error('Error loading booking details:', error);
+                showError('Failed to load booking details');
+            }
+        }
+
+        // Process payment
+        async function processPayment() {
+            const selectedMethod = document.querySelector('.payment-method.active');
+
+            if (!selectedMethod) {
+                showError('Please select a payment method');
+                return;
+            }
+
+            const paymentMethod = selectedMethod.getAttribute('data-method');
+            let paymentData = {
+                bookingId: bookingId,
+                amount: parseFloat(totalAmountEl.textContent.replace('$', '')),
+                paymentMethod: paymentMethod,
+                status: 'pending'
+            };
+
+            // Add card details if credit/debit card
+            if (paymentMethod === 'credit' || paymentMethod === 'debit') {
+                paymentData.cardDetails = {
+                    number: document.getElementById('card-number').value,
+                    expiry: document.getElementById('expiry-date').value,
+                    cvv: document.getElementById('cvv').value,
+                    name: document.getElementById('card-name').value
+                };
+
+                // Simple validation
+                if (!paymentData.cardDetails.number || !paymentData.cardDetails.expiry ||
+                    !paymentData.cardDetails.cvv || !paymentData.cardDetails.name) {
+                    showError('Please fill in all card details');
+                    return;
+                }
+            }
+
+            // Show loading state
+            payButton.disabled = true;
+            spinner.style.display = 'inline-block';
+
+            try {
+                // Send payment to backend
+                const response = await savePayment(paymentData);
+
+                // Handle successful payment
+                showSuccess(response);
+
+            } catch (error) {
+                console.error('Payment error:', error);
+                showError(error.message || 'Payment failed. Please try again.');
+            } finally {
+                // Reset loading state
+                payButton.disabled = false;
+                spinner.style.display = 'none';
+            }
+        }
+
+        // Show success status
+        function showSuccess(payment) {
+            document.getElementById('transaction-id').textContent = payment.paymentId;
+            successStatus.style.display = 'block';
+        }
+
+        // Show error status
+        function showError(message) {
+            document.getElementById('error-message').textContent = message;
+            errorStatus.style.display = 'block';
+        }
+
+        // API Functions
+        async function fetchBookingDetails(bookingId) {
+            const response = await fetch(`http://localhost:8080/bookings/${bookingId}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch booking details');
+            }
+            return await response.json();
+        }
+
+        async function savePayment(paymentData) {
+            const response = await fetch('http://localhost:8080/payments', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('jwtToken'), // Add authentication token
+                    // You may also need to add other headers like:
+                    // 'X-API-Key': 'YOUR_API_KEY_HERE',
+                },
+                body: JSON.stringify(paymentData),
+                credentials: 'include' // Include cookies if using session-based auth
+            });
+
+            if (!response.ok) {
+                try {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Payment failed');
+                } catch (e) {
+                    throw new Error('Payment failed: ' + response.status);
+                }
+            }
+
+            return await response.json();
+        }
     });
 </script>
 </body>
