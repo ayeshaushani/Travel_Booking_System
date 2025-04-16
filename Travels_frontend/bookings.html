@@ -125,7 +125,7 @@
 -->
                                 </div>
                             </div>
-                            <a href="payment.html" class="btn btn-primary mt-4">View All Bookings</a>
+                            <a href="payment.html" class="btn btn-primary mt-4">Pay here</a>
                         </div>
                     </div>
 
@@ -299,10 +299,10 @@
                     loadUserBookings();
                     // From your booking confirmation page
                     localStorage.setItem('currentBookingId', bookingId);
-                    window.location.href = 'payment.html';
+                  //  window.location.href = 'payment.html';
 
 // OR pass in URL
-                    window.location.href = `payment.html?bookingId=${bookingId}`;
+                  //  window.location.href = `payment.html?bookingId=${bookingId}`;
                 },
                 error: function (xhr, status, error) {
                     alert('Error submitting booking: ' + (xhr.responseJSON?.message || error));
