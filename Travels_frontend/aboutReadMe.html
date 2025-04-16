@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sri Lanka Travel Packages | YourTravel</title>
+    <style>
+        /* Main Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+
+        /* Package Cards */
+        .package-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .package-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            width: 350px;
+            transition: transform 0.3s ease;
+        }
+
+        .package-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .package-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .package-content {
+            padding: 20px;
+        }
+
+        .package-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: #2980b9;
+        }
+
+        .short-desc {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .full-desc {
+            display: none;
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        .package-details {
+            display: none;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+
+        .package-details ul {
+            padding-left: 20px;
+        }
+
+        .package-details li {
+            margin-bottom: 8px;
+        }
+
+        /* Buttons */
+        .read-more-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: background 0.3s;
+        }
+
+        .read-more-btn:hover {
+            background: #2980b9;
+        }
+
+        .book-now-btn {
+            display: block;
+            width: 100%;
+            background: #27ae60;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 15px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .book-now-btn:hover {
+            background: #219653;
+        }
+
+        /* Header */
+        header {
+            background: #2980b9;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="container">
+        <h1>YourTravel Sri Lanka</h1>
+        <p>Discover the beauty of Sri Lanka with our exclusive packages</p>
+    </div>
+</header>
+
+<main class="container">
+    <h2>Our Popular Travel Packages</h2>
+
+    <div class="package-container">
+        <!-- Package 1 -->
+        <div class="package-card">
+            <img src="img/sigiriya.png" alt="Cultural Triangle Tour" class="package-image">
+            <div class="package-content">
+                <h3 class="package-title">Cultural Triangle Tour</h3>
+                <p class="short-desc">Explore Sri Lanka's ancient wonders including Sigiriya, Dambulla, and Anuradhapura...</p>
+                <p class="full-desc">This 5-day tour takes you through Sri Lanka's cultural triangle, featuring the ancient rock fortress of Sigiriya, the cave temples of Dambulla, and the sacred city of Anuradhapura. Includes guided tours, accommodation in 4-star hotels, and all entrance fees.</p>
+                <div class="package-details">
+                    <ul>
+                        <li><strong>Duration:</strong> 5 Days / 4 Nights</li>
+                        <li><strong>Price:</strong> $450 per person</li>
+                        <li><strong>Includes:</strong> Accommodation, Breakfast, Guided Tours, Transport</li>
+                        <li><strong>Best Time:</strong> Year-round</li>
+                    </ul>
+                    <a href="bookings.html" class="book-now-btn">Book Now</a>
+                </div>
+                <button class="read-more-btn">Read More</button>
+            </div>
+        </div>
+
+        <!-- Package 2 -->
+        <div class="package-card">
+            <img src="img/beach.png" alt="South Coast Beach Holiday" class="package-image">
+            <div class="package-content">
+                <h3 class="package-title">South Coast Beach Holiday</h3>
+                <p class="short-desc">Relax on the golden beaches of Unawatuna and Mirissa with this 7-day package...</p>
+                <p class="full-desc">Enjoy a week of sun, sand, and surf on Sri Lanka's beautiful south coast. Stay in beachfront villas, go whale watching in Mirissa, and experience the famous stilt fishermen. Package includes airport transfers and optional ayurvedic spa treatments.</p>
+                <div class="package-details">
+                    <ul>
+                        <li><strong>Duration:</strong> 7 Days / 6 Nights</li>
+                        <li><strong>Price:</strong> $699 per person</li>
+                        <li><strong>Includes:</strong> Beachfront Accommodation, Breakfast, Airport Transfers</li>
+                        <li><strong>Best Time:</strong> November to April</li>
+                    </ul>
+                    <a href="bookings.html" class="book-now-btn">Book Now</a>
+                </div>
+                <button class="read-more-btn">Read More</button>
+            </div>
+        </div>
+
+        <!-- Package 3 -->
+        <div class="package-card">
+            <img src="img/hills.png" alt="Hill Country Adventure" class="package-image">
+            <div class="package-content">
+                <h3 class="package-title">Hill Country Adventure</h3>
+                <p class="short-desc">Experience tea plantations, waterfalls and scenic train rides in Sri Lanka's hill country...</p>
+                <p class="full-desc">This 6-day adventure takes you through the misty hills of Nuwara Eliya, the tea plantations of Ella, and the wildlife of Horton Plains. Includes a scenic train ride, visits to tea factories, and hiking opportunities with stunning views.</p>
+                <div class="package-details">
+                    <ul>
+                        <li><strong>Duration:</strong> 6 Days / 5 Nights</li>
+                        <li><strong>Price:</strong> $550 per person</li>
+                        <li><strong>Includes:</strong> Accommodation, Breakfast, Train Tickets, Guided Hikes</li>
+                        <li><strong>Best Time:</strong> January to May</li>
+                    </ul>
+                    <a href="bookings.html" class="book-now-btn">Book Now</a>
+                </div>
+                <button class="read-more-btn">Read More</button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="container">
+        <p>© 2023 YourTravel Sri Lanka. All rights reserved.</p>
+        <p>Contact: +94 76 123 4567 | info@yourtravel.lk</p>
+    </div>
+</footer>
+
+<script>
+    // Read More Functionality
+    document.querySelectorAll('.read-more-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const card = this.closest('.package-card');
+            const shortDesc = card.querySelector('.short-desc');
+            const fullDesc = card.querySelector('.full-desc');
+            const details = card.querySelector('.package-details');
+
+            if (this.textContent === 'Read More') {
+                // Show full content
+                shortDesc.style.display = 'none';
+                fullDesc.style.display = 'block';
+                details.style.display = 'block';
+                this.textContent = 'Read Less';
+            } else {
+                // Hide full content
+                fullDesc.style.display = 'none';
+                details.style.display = 'none';
+                shortDesc.style.display = 'block';
+                this.textContent = 'Read More';
+            }
+        });
+    });
+
+    // Simulate package loading from your system
+    window.addEventListener('load', function() {
+        // In a real implementation, you would fetch packages from your backend
+        console.log('Travel packages loaded successfully');
+    });
+</script>
+</body>
+</html>

@@ -302,6 +302,126 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const contactForm = document.querySelector('.contact-form form') ||
+            document.querySelector('.wow.fadeInUp[data-wow-delay="0.5s"] form');
+
+        if (contactForm) {
+            // Configure as first-party form handler
+            contactForm.setAttribute('action', '/submit-contact');
+            contactForm.setAttribute('method', 'POST');
+
+            contactForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                // Get form data (first-party only)
+                const formData = new FormData(contactForm);
+                const formValues = Object.fromEntries(formData.entries());
+
+                // Validate
+                if (!validateForm(formValues)) return;
+
+                // Submit
+                await submitForm(formValues);
+            });
+        }
+
+        // Edge-friendly validation
+        function validateForm(data) {
+            let isValid = true;
+
+            // Clear previous errors
+            document.querySelectorAll('.is-invalid').forEach(el => {
+                el.classList.remove('is-invalid');
+            });
+
+            // Name validation
+            if (!data.name || data.name.trim().length < 2) {
+                document.querySelector('#name').classList.add('is-invalid');
+                isValid = false;
+            }
+
+            // Email validation (RFC 5322 compliant)
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!data.email || !emailRegex.test(data.email)) {
+                document.querySelector('#email').classList.add('is-invalid');
+                isValid = false;
+            }
+
+            // Message validation
+            if (!data.message || data.message.trim().length < 10) {
+                document.querySelector('#message').classList.add('is-invalid');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                showAlert('Please fill all required fields correctly', 'error');
+            }
+
+            return isValid;
+        }
+
+        // Cookie-less submission
+        async function submitForm(data) {
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+
+            try {
+                // UI feedback
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = 'Sending...';
+
+                // First-party fetch with privacy headers
+                const response = await fetch('/submit-contact', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('jwtToken') // ✅ Add JWT token
+                    },
+                    body: JSON.stringify({
+                        ...data,
+                        // Privacy-conscious metadata
+                        source: 'website-form',
+                        timestamp: new Date().toISOString()
+                    }),
+                    credentials: 'same-origin' // No third-party cookies
+                });
+
+                if (!response.ok) throw new Error(await response.text());
+
+                showAlert('Message sent successfully!', 'success');
+                contactForm.reset();
+
+            } catch (error) {
+                console.error('Submission error:', error);
+                showAlert(error.message || 'Failed to send message. Please try again.', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Send Message';
+            }
+        }
+
+        // Edge-compatible alert system
+        function showAlert(message, type) {
+            // Remove existing alerts
+            document.querySelectorAll('.form-alert').forEach(el => el.remove());
+
+            // Create alert (using Bootstrap classes if available)
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `form-alert alert alert-${type} mt-3`;
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.textContent = message;
+
+            // Insert near form
+            contactForm.parentNode.insertBefore(alertDiv, contactForm.nextSibling);
+
+            // Auto-dismiss
+            setTimeout(() => {
+                alertDiv.style.opacity = '0';
+                setTimeout(() => alertDiv.remove(), 300);
+            }, 5000);
+        }
+    });
+</script>
 </body>
 
 </html>
