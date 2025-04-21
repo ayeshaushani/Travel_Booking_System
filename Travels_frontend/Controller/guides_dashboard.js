@@ -1,5 +1,347 @@
 document.addEventListener('DOMContentLoaded', function () {
     // DOM Elements
+    const manageGuidesLink = $('#manageGuidesLink');
+    const addGuideLink = $('#addGuideLink');
+    const backToGuides = $('#backToGuides');
+    const dashboardOverview = $('#dashboardOverview');
+    const guideManagement = $('#guideManagement');
+    const guideFormContainer = $('#guideFormContainer');
+    const guideForm = $('#guideForm');
+    const guidesTable = $('#guidesTable tbody');
+    const searchInput = $('#searchGuides');
+    const prevPageBtn = $('#prevPage');
+    const nextPageBtn = $('#nextPage');
+    const pageInfo = $('#pageInfo');
+    const modal = $('#guideDetailModal');
+    const closeModal = $('.close-modal');
+
+    // API Base URL
+    const API_BASE_URL = 'http://localhost:8080/guides';
+
+    if (!manageGuidesLink.length || !addGuideLink.length || !backToGuides.length || !dashboardOverview.length ||
+        !guideManagement.length || !guideFormContainer.length || !guideForm.length || !guidesTable.length ||
+        !searchInput.length || !prevPageBtn.length || !nextPageBtn.length || !pageInfo.length || !modal.length || !closeModal.length) {
+        console.error('Some elements are missing from the DOM. Check your HTML!');
+        return;
+    }
+
+    let currentPage = 1;
+    let totalPages = 1;
+    let allGuides = [];
+    let filteredGuides = [];
+
+    // Initialize the dashboard
+    loadDashboardStats();
+    loadAllGuides();
+
+    // Event Listeners
+    manageGuidesLink.on('click', function(e) {
+        e.preventDefault();
+        showGuideManagement();
+    });
+
+    addGuideLink.on('click', function(e) {
+        e.preventDefault();
+        showAddGuideForm();
+    });
+
+    backToGuides.on('click', function(e) {
+        e.preventDefault();
+        showGuideManagement();
+    });
+
+    guideForm.on('submit', function(e) {
+        e.preventDefault();
+        saveGuide();
+    });
+
+    searchInput.on('input', function() {
+        filterGuides();
+    });
+
+    prevPageBtn.on('click', function() {
+        if (currentPage > 1) {
+            currentPage--;
+            renderGuidesTable();
+        }
+    });
+
+    nextPageBtn.on('click', function() {
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderGuidesTable();
+        }
+    });
+
+    closeModal.on('click', function() {
+        modal.hide();
+    });
+
+    $(window).on('click', function(event) {
+        if (event.target === modal[0]) {
+            modal.hide();
+        }
+    });
+
+    // Functions
+    function showGuideManagement() {
+        dashboardOverview.hide();
+        guideFormContainer.hide();
+        guideManagement.show();
+    }
+
+    function showAddGuideForm() {
+        dashboardOverview.hide();
+        guideManagement.hide();
+        guideFormContainer.show();
+        $('#formTitle').text('Add New Guide');
+        guideForm[0].reset();
+        $('#guideId').val('');
+    }
+
+    function showEditGuideForm(guide) {
+        dashboardOverview.hide();
+        guideManagement.hide();
+        guideFormContainer.show();
+        $('#formTitle').text('Edit Guide');
+
+        // Map backend fields to form fields
+        $('#guideId').val(guide.guideId);
+        $('#fullName').val(guide.name);
+        $('#email').val(guide.email);
+        $('#phone').val(guide.contact);
+        $('#experience').val(guide.experience);
+    }
+
+    function loadDashboardStats() {
+        $.ajax({
+            url: API_BASE_URL,
+            type: 'GET',
+            success: function(guides) {
+                const total = guides.length;
+                $('#totalGuides').text(total);
+                $('#activeGuides').text(total);
+                $('#onLeaveGuides').text('0');
+                $('#inactiveGuides').text('0');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error loading dashboard stats:', error);
+                $('#totalGuides').text('0');
+                $('#activeGuides').text('0');
+                $('#onLeaveGuides').text('0');
+                $('#inactiveGuides').text('0');
+            }
+        });
+    }
+
+    function loadAllGuides() {
+        $.ajax({
+            url: API_BASE_URL,
+            type: 'GET',
+            success: function(guides) {
+                allGuides = guides.map(guide => ({
+                    guideId: guide.guideId,
+                    name: guide.name,
+                    email: guide.email,
+                    contact: guide.contact,
+                    experience: guide.experience,
+                    status: 'active',
+                    languages: ['english'],
+                    specializations: 'General',
+                    certifications: '',
+                    bio: `Professional guide with ${guide.experience} years of experience`
+                }));
+
+                filteredGuides = [...allGuides];
+                currentPage = 1;
+                calculateTotalPages();
+                renderGuidesTable();
+            },
+            error: function(xhr, status, error) {
+                console.error('Error loading guides:', error);
+                showError('Failed to load guides. Please try again later.');
+            }
+        });
+    }
+
+    function filterGuides() {
+        const searchTerm = searchInput.val().toLowerCase();
+        filteredGuides = allGuides.filter(guide =>
+            guide.name.toLowerCase().includes(searchTerm) ||
+            guide.email.toLowerCase().includes(searchTerm) ||
+            guide.contact.toLowerCase().includes(searchTerm)
+        );
+        currentPage = 1;
+        calculateTotalPages();
+        renderGuidesTable();
+    }
+
+    function calculateTotalPages() {
+        totalPages = Math.ceil(filteredGuides.length / 10) || 1;
+        pageInfo.text(`Page ${currentPage} of ${totalPages}`);
+    }
+
+    function renderGuidesTable() {
+        guidesTable.empty();
+        const startIndex = (currentPage - 1) * 10;
+        const guidesToShow = filteredGuides.slice(startIndex, startIndex + 10);
+
+        if (guidesToShow.length === 0) {
+            const row = $('<tr>');
+            const cell = $('<td>').attr('colspan', 7).text('No guides found').css('text-align', 'center');
+            row.append(cell);
+            guidesTable.append(row);
+            return;
+        }
+
+        guidesToShow.forEach(guide => {
+            const row = $('<tr>');
+
+            row.append($('<td>').text(guide.guideId));
+            row.append($('<td>').text(guide.name));
+
+            const contactCell = $('<td>').html(`<div>${guide.email}</div><div>${guide.contact}</div>`);
+            row.append(contactCell);
+
+            row.append($('<td>').text(guide.languages.join(', ')));
+            row.append($('<td>').text(guide.specializations || 'N/A'));
+
+            const statusCell = $('<td>');
+            const badge = $('<span>').addClass(`status-badge status-${guide.status}`).text(guide.status.replace('_', ' '));
+            statusCell.append(badge);
+            row.append(statusCell);
+
+            const actionCell = $('<td>').html(`
+                <div class="action-btns">
+                    <button class="btn-view" onclick="viewGuideDetails(${guide.guideId})">View</button>
+                    <button class="btn-edit" onclick="editGuide(${guide.guideId})">Edit</button>
+                    <button class="btn-delete" onclick="deleteGuide(${guide.guideId})">Delete</button>
+                </div>
+            `);
+            row.append(actionCell);
+
+            guidesTable.append(row);
+        });
+
+        pageInfo.text(`Page ${currentPage} of ${totalPages}`);
+        prevPageBtn.prop('disabled', currentPage === 1);
+        nextPageBtn.prop('disabled', currentPage === totalPages);
+    }
+
+    function saveGuide() {
+        const guideId = $('#guideId').val();
+        const isNew = guideId === '';
+
+        const formData = {
+            name: $('#fullName').val(),
+            email: $('#email').val(),
+            contact: $('#phone').val(),
+            experience: parseInt($('#experience').val()) || 0
+        };
+
+        const url = isNew ? API_BASE_URL : `${API_BASE_URL}/${guideId}`;
+        const method = isNew ? 'POST' : 'PUT';
+
+        $.ajax({
+            url: url,
+            type: method,
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('jwtToken')
+            },
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success: function(data) {
+                alert(isNew ? 'Guide added successfully!' : 'Guide updated successfully!');
+                loadAllGuides();
+                showGuideManagement();
+            },
+            error: function(xhr, status, error) {
+                console.error('Error saving guide:', error);
+                alert('Error saving guide: ' + error);
+            }
+        });
+    }
+
+    function showError(message) {
+        const errorDiv = $('<div>').addClass('error-message').text(message);
+        $('#mainContent').prepend(errorDiv);
+        setTimeout(() => errorDiv.remove(), 5000);
+    }
+
+    // Global functions for inline event handlers
+    window.viewGuideDetails = function(guideId) {
+        $.ajax({
+            url: `${API_BASE_URL}/${guideId}`,
+            type: 'GET',
+            success: function(guide) {
+                const modalContent = $('#guideDetailContent');
+                modalContent.html(`
+                    <div class="guide-detail">
+                        <div class="guide-photo">
+                            <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(guide.name)}&background=random" alt="${guide.name}">
+                        </div>
+                        <div class="guide-info">
+                            <h3>${guide.name}</h3>
+                            <p><span class="detail-label">Email:</span> ${guide.email}</p>
+                            <p><span class="detail-label">Phone:</span> ${guide.contact}</p>
+                            <p><span class="detail-label">Experience:</span> ${guide.experience} years</p>
+                            <p><span class="detail-label">Status:</span> <span class="status-badge status-active">Active</span></p>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn-primary" onclick="editGuide(${guide.guideId}); $('#guideDetailModal').hide()">Edit Guide</button>
+                    </div>
+                `);
+                modal.show();
+            },
+            error: function(xhr, status, error) {
+                console.error('Error loading guide details:', error);
+                alert('Failed to load guide details: ' + error);
+            }
+        });
+    };
+
+    window.editGuide = function(guideId) {
+        $.ajax({
+            url: `${API_BASE_URL}/${guideId}`,
+            type: 'GET',
+            success: function(guide) {
+                showEditGuideForm({
+                    guideId: guide.guideId,
+                    name: guide.name,
+                    email: guide.email,
+                    contact: guide.contact,
+                    experience: guide.experience
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error loading guide for editing:', error);
+                alert('Failed to load guide for editing: ' + error);
+            }
+        });
+    };
+
+    window.deleteGuide = function(guideId) {
+        if (!confirm('Are you sure you want to delete this guide?')) return;
+
+        $.ajax({
+            url: `${API_BASE_URL}/${guideId}`,
+            type: 'DELETE',
+            success: function(message) {
+                alert(message);
+                loadAllGuides();
+            },
+            error: function(xhr, status, error) {
+                console.error('Error deleting guide:', error);
+                alert('Error deleting guide: ' + error);
+            }
+        });
+    };
+});
+
+/*
+document.addEventListener('DOMContentLoaded', function () {
+    // DOM Elements
     const manageGuidesLink = document.getElementById('manageGuidesLink');
     const addGuideLink = document.getElementById('addGuideLink');
     const backToGuides = document.getElementById('backToGuides');
@@ -360,4 +702,4 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert('Error deleting guide: ' + error.message);
             });
     };
-});
+});*/

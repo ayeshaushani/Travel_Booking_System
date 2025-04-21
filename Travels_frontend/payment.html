@@ -291,8 +291,8 @@
         async function fetchBookingDetails(bookingId) {
             const response = await fetch(`http://localhost:8080/bookings/${bookingId}`, {
                 headers: {
-                    'Content-Type': 'application/json'
-                }
+                    'Authorization': 'Bearer ' + localStorage.getItem('jwtToken')
+                },
             });
 
             if (!response.ok) {
@@ -311,8 +311,7 @@
                 const response = await fetch('http://localhost:8080/payments', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
+                        'Authorization': 'Bearer ' + localStorage.getItem('jwtToken')
                     },
                     body: JSON.stringify(paymentData)
                 });
