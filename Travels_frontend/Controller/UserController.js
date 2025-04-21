@@ -69,14 +69,14 @@ $('#signInForm').on('submit', function (event) {
             console.log(response);
             localStorage.setItem('jwtToken', response.tokens);
             localStorage.setItem('userId', response.userId);
-            localStorage.setItem('userRole', response.userRole);
+            localStorage.setItem('userRole', response.role);
 
-            switch (response.userRole) {
+            switch (response.role) {
                 case 'ADMIN':
                     window.location.href = '../admin/AdminDashboard.html';
                     break;
-                case 'GUIDE':
-                    window.location.href = '../guide/guideManagment.html';
+                case 'AGENT':
+                    window.location.href = '../guide/guideDashBoard.html';
                     break;
                 default:
                     window.location.href = '../index.html';

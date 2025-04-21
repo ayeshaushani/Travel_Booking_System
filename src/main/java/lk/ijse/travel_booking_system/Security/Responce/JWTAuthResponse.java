@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class JWTAuthResponse {
     private String tokens;
+    private String role;
 }

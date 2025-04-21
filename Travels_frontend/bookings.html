@@ -125,7 +125,7 @@
 -->
                                 </div>
                             </div>
-                            <a href="payment.html" class="btn btn-primary mt-4">Pay here</a>
+                            <a href="paymentTesttt.html" class="btn btn-primary mt-4">Pay here</a>
                         </div>
                     </div>
 
@@ -191,6 +191,8 @@
             $('.step').removeClass('active');
             $(`#${stepId}`).addClass('active');
         }
+
+        let bookingIdSelect = 0;
 
         // Load packages
         function loadPackages() {
@@ -287,6 +289,7 @@
                     showStep('step3');
 
                     $('#bookingId').text(booking.bookingId);
+                    bookingIdSelect = booking.bookingId
                     $('#bookingDetails').html(`
                         <strong>Package:</strong> ${selectedPackage.name}<br>
                         <strong>Date:</strong> ${new Date(booking.bookingDate).toLocaleDateString()}<br>

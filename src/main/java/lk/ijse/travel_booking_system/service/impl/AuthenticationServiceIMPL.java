@@ -53,7 +53,8 @@ public class AuthenticationServiceIMPL implements AuthenticationService {
                 .orElseThrow(()->new NotFoundException("User Not Found"));
         var generateToken =jwtService.generateToken(userEntity);
         System.out.println("==================================  :"+generateToken);
-        return JWTAuthResponse.builder().tokens(generateToken).build();
+        return JWTAuthResponse.builder().tokens(generateToken).role(userEntity.getRole()).build();
+
     }
 
     @Override
